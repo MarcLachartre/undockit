@@ -1,0 +1,59 @@
+.overlay-container {
+    position: relative;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.message {
+    position: relative;
+    display: none;
+    text-align: center;
+    font-family: 'Press Start 2P';
+    color: white;
+    font-size: 40px;
+    margin-top: 70px;
+    line-height: 40px;
+    letter-spacing: 5px;
+    text-shadow: -3px 0 0 #fdff2a, -6px 0 0 #df4a42, 3px 0 0 #91fcfe, 6px 0 0 #4405fc;
+}
+
+.message:hover{
+    cursor: pointer;
+}
+
+@keyframes blink {
+    from
+  {opacity: 1}
+
+to
+  {opacity: 0}
+}
+
+@media (min-width: 320px) {
+  .message {
+    font-size: 15px;
+    margin-top: 30px;
+    line-height: 30px;
+    letter-spacing: 3px;
+    text-shadow: -1px 0 0 #fdff2a, -2px 0 0 #df4a42, 1px 0 0 #91fcfe, 2px 0 0 #4405fc;
+  }
+}
+
+@media (min-width: 480px) {
+  .message {
+    font-size: 25px;
+    margin-top: 70px;
+    line-height: 40px;
+    letter-spacing: 5px;
+    text-shadow: -2px 0 0 #fdff2a, -4px 0 0 #df4a42, 2px 0 0 #91fcfe, 4px 0 0 #4405fc;
+  }
+}
+
+@media (min-width: 992px) {
+  .message {
+    font-size: 40px;
+    text-shadow: -3px 0 0 #fdff2a, -6px 0 0 #df4a42, 3px 0 0 #91fcfe, 6px 0 0 #4405fc;
+  }
+}
