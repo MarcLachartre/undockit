@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class Overlay extends React.Component {
     removeMessageOnClick() {
-        const cul = () => {
+        const removeMessage = () => {
             
             document.querySelector(".message").style.display = "none";
             setTimeout(()=>{
@@ -17,10 +17,12 @@ export default class Overlay extends React.Component {
                 document.querySelector(".message").style.display = "none";
             }, (this.props.displaySystemsOnlineTime + this.props.systemsOnlineDuration));
 
-            document.querySelector(".message").removeEventListener("click", cul);
+            document.querySelector(".message").removeEventListener("click", removeMessage);
+            window.removeEventListener("keyup", removeMessage);
         };
 
-        document.querySelector(".message").addEventListener("click", cul);
+        document.querySelector(".message").addEventListener("click", removeMessage);
+        window.addEventListener("keyup", removeMessage);
     }
     
     displayMessage(content, animation, cursor) {

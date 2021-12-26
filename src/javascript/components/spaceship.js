@@ -151,9 +151,11 @@ export default class Spaceship extends React.Component {
             document.querySelector(".spaceship-container").setAttribute("undock-sequence", true);
             document.querySelector(".spaceship-container").setAttribute("stop-boosters", true);
             document.querySelector(".message").removeEventListener("click", undockSequence);
+            window.removeEventListener("keyup", undockSequence);
         }
 
         document.querySelector(".message").addEventListener("click", undockSequence);
+        window.addEventListener("keyup", undockSequence);
     }
 
 

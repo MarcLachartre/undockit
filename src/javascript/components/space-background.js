@@ -136,9 +136,11 @@ export default class Background extends React.Component {
 			this.startStarEaseOut(); // stars that will ease out on the screen start
 			this.restartStarScroll(); // after animation ends, new stars are scrolling slowly
 			document.querySelector(".message").removeEventListener("click", starsSequence);
+			window.removeEventListener("keyup", starsSequence);
 		}
 
 		document.querySelector(".message").addEventListener("click", starsSequence); // On user input see starsSequence code
+		window.addEventListener("keyup", starsSequence); // On user input see starsSequence code
 
 	}
 
