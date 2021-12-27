@@ -71,46 +71,48 @@ export default class Background extends React.Component {
 	}
 
 	isOnRightSideScreen = (star) => {
-		console.log(Number((star.style.width).substring(0, star.style.width.length - 2)))
 		return (Number(star.getBoundingClientRect().x) > window.innerWidth + Number((star.style.width).substring(0, star.style.width.length - 2))*10);
 	}
 
 	startStarEaseOut() { // this will be split in two transitions. The first transition will mimic the default stars animation until the default stars are cleared from the screen. The second one will be the ease out stars.
-		const that = this;
-
-		document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-			console.log()
-			const xTranslation = star.attributes.xTranslation.value;
-
 			setTimeout(function() { // first the transition runs linear until all default star cleared the screen. We have to calculate the time it takes for the slowest default star to go away from the screen.
-				star.style.transitionDuration = `${this.props.screenClearedTime}s`;
-				star.style.transform = `translateX(-${xTranslation}vw)`;
+				document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
+					const xTranslation = star.attributes.xTranslation.value;
+					star.style.transitionDuration = `${this.props.screenClearedTime}s`;
+					star.style.transform = `translateX(-${xTranslation}vw)`;
+				})
 			}.bind(this), 0)
 
 			setTimeout(function() { // once all the default stars cleared the screen, we can start slowing down the stars with transtion property
-				star.style.transitionTimingFunction = "ease-out";
-				star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
-				if (window.matchMedia("(min-width: 1200px)").matches === true) {
-					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89.5deg)`;
-				} else if (window.matchMedia("(min-width: 992px)").matches === true) {
-					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89deg)`;
-				} else if (window.matchMedia("(min-width: 480px)").matches === true) {
-					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(88.2deg)`;
-				} else if (window.matchMedia("(min-width: 320px)").matches === true) {
-					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(85deg)`;
-				} 
-				
-				
-				star.children[0].style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
-				star.children[0].style.opacity = 0; 
+				document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
+					const xTranslation = star.attributes.xTranslation.value;
+					star.style.transitionTimingFunction = "ease-out";
+					star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
+					if (window.matchMedia("(min-width: 1200px)").matches === true) {
+						star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89.5deg)`;
+					} else if (window.matchMedia("(min-width: 992px)").matches === true) {
+						star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89deg)`;
+					} else if (window.matchMedia("(min-width: 480px)").matches === true) {
+						star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(88.2deg)`;
+					} else if (window.matchMedia("(min-width: 320px)").matches === true) {
+						star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(85deg)`;
+					} 
+					
+					
+					star.children[0].style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
+					star.children[0].style.opacity = 0; 
+				})
 			}.bind(this), this.props.screenClearedTime*1000)
 
 			setTimeout(function() {
-				star.style.transitionDuration = "0s";
-				star.style.width = star.style.height;
-				star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(0deg)`;
+				document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
+					const xTranslation = star.attributes.xTranslation.value;
+					star.style.transitionDuration = "0s";
+					star.style.width = star.style.height;
+					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(0deg)`;
+					})
 			}, (this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*1000);
-		})
+		// })
 	}
 
 	restartStarScroll() {
@@ -137,12 +139,14 @@ export default class Background extends React.Component {
 			this.startStarEaseOut(); // stars that will ease out on the screen start
 			this.restartStarScroll(); // after animation ends, new stars are scrolling slowly
 			document.querySelector(".message").removeEventListener("click", starsSequence);
+			document.querySelector(".message").removeEventListener("touchstart", starsSequence);
 			window.removeEventListener("keyup", starsSequence);
 		}
 
 		setTimeout(()=>{
 			document.querySelector(".message").addEventListener("click", starsSequence); // On user input see starsSequence code
-			window.addEventListener("keyup", starsSequence); // On user input see starsSequence code
+			document.querySelector(".message").addEventListener("touchstart", starsSequence);
+			window.addEventListener("keyup", starsSequence); 
 		}, this.props.startTime)
 	}
 

@@ -43,7 +43,6 @@ export default class Spaceship extends React.Component {
     defaultFlameSequence(boosters) { // boosters need to be a array
         let last = Date.now(); // timestamp of the last sequence() call
         
-        let k = 0; // k will start to increment when the page loads (useful to add an event listener at k===0)
         let i = 0; // i will start to increment when user starts the undock sequence
         const sequence = () => {
             if (Date.now() >= last + 150) { // if current timestamp is = or > to last timestamp, execute the following code and reset last to current timestamp
@@ -68,7 +67,6 @@ export default class Spaceship extends React.Component {
 
                 if (document.querySelector(".spaceship-container").getAttribute("undock-sequence") !== null) {
                     if (document.querySelector(".spaceship-container").getAttribute("stop-boosters")  !== null) {
-                        // console.log("bite")
                         this.stopBoosters(boosters[0], i, 150, this.props.spaceshipBoostersSeq.start, this.props.spaceshipBoostersSeq.end); // spaceship boosters
                         this.stopBoosters(boosters[1], i, 150, this.props.cargoBoostersSeq.start, this.props.cargoBoostersSeq.end); // cargo boosters
                     }
@@ -151,11 +149,13 @@ export default class Spaceship extends React.Component {
             document.querySelector(".spaceship-container").setAttribute("undock-sequence", true);
             document.querySelector(".spaceship-container").setAttribute("stop-boosters", true);
             document.querySelector(".message").removeEventListener("click", undockSequence);
+            document.querySelector(".message").removeEventListener("touchstart", undockSequence);
             window.removeEventListener("keyup", undockSequence);
         }
 
         setTimeout(() => {
             document.querySelector(".message").addEventListener("click", undockSequence);
+            document.querySelector(".message").addEventListener("touchstart", undockSequence);
             window.addEventListener("keyup", undockSequence);
         },this.props.startTime)
     }

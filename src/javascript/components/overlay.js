@@ -19,9 +19,11 @@ export default class Overlay extends React.Component {
 
             document.querySelector(".message").removeEventListener("click", removeMessage);
             window.removeEventListener("keyup", removeMessage);
+            window.removeEventListener("touchstart", removeMessage);
         };
 
         document.querySelector(".message").addEventListener("click", removeMessage);
+        document.querySelector(".message").addEventListener("touchstart", removeMessage);
         window.addEventListener("keyup", removeMessage);
     }
     
