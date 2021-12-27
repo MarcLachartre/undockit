@@ -71,7 +71,7 @@ export default class Background extends React.Component {
 	}
 
 	isOnRightSideScreen = (star) => {
-		return (Number(star.getBoundingClientRect().x) > window.innerWidth + Number((star.style.width).substring(0, star.style.width.length - 2)));
+		return (Number(star.getBoundingClientRect().x) > window.innerWidth + Number((star.style.width).substring(0, star.style.width.length - 2))*10);
 	}
 
 	startStarEaseOut() { // this will be split in two transitions. The first transition will mimic the default stars animation until the default stars are cleared from the screen. The second one will be the ease out stars.
@@ -81,7 +81,7 @@ export default class Background extends React.Component {
 			if (Date.now() - start >= 100) {
 
 
-		console.log(i === Number(this.props.screenClearedTime*10).toFixed(0))
+		console.log(Number(((this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*10).toFixed(0)))
 		console.log(Number((this.props.screenClearedTime*10).toFixed(0)))
 						if (i === 0) {
 							document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
@@ -108,7 +108,7 @@ export default class Background extends React.Component {
 								star.children[0].style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
 								star.children[0].style.opacity = 0; 
 							})
-						} else if (i === (Number(this.props.screenClearedTime) + 2*((Number(this.props.screenClearedTime/2))*10))-2) {
+						} else if (i === Number(((this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*10).toFixed(0))) {
 							document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
 								const xTranslation = star.attributes.xTranslation.value;
 								star.style.transitionDuration = "0s";
