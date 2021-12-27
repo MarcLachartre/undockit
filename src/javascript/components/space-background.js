@@ -71,7 +71,7 @@ export default class Background extends React.Component {
 	}
 
 	isOnRightSideScreen = (star) => {
-		return (Number(star.getBoundingClientRect().x) > window.innerWidth + Number((star.style.width).substring(0, star.style.width.length - 2))*10);
+		return (Number(star.getBoundingClientRect().x) > window.innerWidth + Number((star.style.width).substring(0, star.style.width.length - 2)));
 	}
 
 	startStarEaseOut() { // this will be split in two transitions. The first transition will mimic the default stars animation until the default stars are cleared from the screen. The second one will be the ease out stars.
@@ -84,14 +84,12 @@ export default class Background extends React.Component {
 		console.log(i === Number(this.props.screenClearedTime*10).toFixed(0))
 		console.log(Number((this.props.screenClearedTime*10).toFixed(0)))
 						if (i === 0) {
-							console.log("bite")
 							document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
 								const xTranslation = star.attributes.xTranslation.value;
 								star.style.transitionDuration = `${this.props.screenClearedTime}s`;
 								star.style.transform = `translateX(-${xTranslation}vw)`;
 							});
 						} else if (i === Number((this.props.screenClearedTime*10).toFixed(0))-2) {
-							console.log("chatte")
 							document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
 								const xTranslation = star.attributes.xTranslation.value;
 								star.style.transitionTimingFunction = "ease-out";
@@ -110,8 +108,7 @@ export default class Background extends React.Component {
 								star.children[0].style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
 								star.children[0].style.opacity = 0; 
 							})
-						} else if (i === Number(this.props.screenClearedTime) + 2*((Number(this.props.screenClearedTime/2))*10)) {
-							console.log("cul")
+						} else if (i === (Number(this.props.screenClearedTime) + 2*((Number(this.props.screenClearedTime/2))*10))-2) {
 							document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
 								const xTranslation = star.attributes.xTranslation.value;
 								star.style.transitionDuration = "0s";
