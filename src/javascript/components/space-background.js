@@ -138,10 +138,11 @@ export default class Background extends React.Component {
 			document.querySelector(".message").removeEventListener("click", starsSequence);
 			window.removeEventListener("keyup", starsSequence);
 		}
-
-		document.querySelector(".message").addEventListener("click", starsSequence); // On user input see starsSequence code
-		window.addEventListener("keyup", starsSequence); // On user input see starsSequence code
-
+		
+		setTimeout(()=>{
+			document.querySelector(".message").addEventListener("click", starsSequence); // On user input see starsSequence code
+			window.addEventListener("keyup", starsSequence); // On user input see starsSequence code
+		}, this.props.startTime)
 	}
 
 	render() {

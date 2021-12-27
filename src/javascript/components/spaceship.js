@@ -154,8 +154,10 @@ export default class Spaceship extends React.Component {
             window.removeEventListener("keyup", undockSequence);
         }
 
-        document.querySelector(".message").addEventListener("click", undockSequence);
-        window.addEventListener("keyup", undockSequence);
+        setTimeout(() => {
+            document.querySelector(".message").addEventListener("click", undockSequence);
+            window.addEventListener("keyup", undockSequence);
+        },this.props.startTime)
     }
 
 

@@ -19,14 +19,17 @@ class HomePage extends React.Component {
         const shipUpDuration = 1950; 
         const systemsOnlineDuration = 3000;
 
+        const startTime = 7000;
 
         return(
             <div className = "homepage">
                 <Background 
+                    startTime = {startTime}
                     screenClearedTime= {this.screenCleared(10, 450)}
                     restartStarScrollTime = {13500}
                 />
                 <Spaceship 
+                    startTime = {startTime}
                     shipSplitTime = {shipSplitTime} 
                     shipSplitDuration = {shipSplitDuration} 
                     shipUpTime = {shipSplitTime + shipSplitDuration} 
@@ -37,7 +40,7 @@ class HomePage extends React.Component {
                     restartSpaceshipBoosters = {{start:12750, intermediate: 3900, end:16800}}
                 />
                 <Overlay 
-                    startTime={7000} 
+                    startTime={startTime} 
                     displaySystemsOnlineTime = {10500} 
                     systemsOnlineDuration = {systemsOnlineDuration}
                 />
