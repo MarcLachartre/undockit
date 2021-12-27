@@ -71,7 +71,8 @@ export default class Background extends React.Component {
 	}
 
 	isOnRightSideScreen = (star) => {
-		return (Number(star.getBoundingClientRect().x) > window.innerWidth + Number((star.style.width).substring(0, star.style.width.length - 2)));
+		console.log(Number((star.style.width).substring(0, star.style.width.length - 2)))
+		return (Number(star.getBoundingClientRect().x) > window.innerWidth + Number((star.style.width).substring(0, star.style.width.length - 2))*10);
 	}
 
 	startStarEaseOut() { // this will be split in two transitions. The first transition will mimic the default stars animation until the default stars are cleared from the screen. The second one will be the ease out stars.
@@ -138,7 +139,7 @@ export default class Background extends React.Component {
 			document.querySelector(".message").removeEventListener("click", starsSequence);
 			window.removeEventListener("keyup", starsSequence);
 		}
-		
+
 		setTimeout(()=>{
 			document.querySelector(".message").addEventListener("click", starsSequence); // On user input see starsSequence code
 			window.addEventListener("keyup", starsSequence); // On user input see starsSequence code
