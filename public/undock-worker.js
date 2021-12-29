@@ -15,3 +15,13 @@
 //     }
 //     counter()
 // }, 150);
+
+// self.addEventListener("install", function (event) {
+//     console.log("Hello world from the Service Worker ");
+//   });
+// self.addEventListener('message', (event) => console.log('Worker received:', event.data));
+// self.postMessage('from Worker');
+
+self.addEventListener("install", function (event) {
+  console.log("Hello world from the Service Worker 🤙");
+});

@@ -3,13 +3,14 @@ import React from "react"
 import Background from '../src/javascript/components/space-background.js';
 import Spaceship from '../src/javascript/components/spaceship.js';
 import Overlay from '../src/javascript/components/overlay.js';
-import '../public/undock-worker.js';
 
 class HomePage extends React.Component {
 
     screenCleared(maxAnimationDuration, maxXTranslation) { //maximum time a star will spend on screen with the default scrolling animation
 		return (maxAnimationDuration * 100 / maxXTranslation)
 	}
+
+
 
     render() { //Important: all timings need to be done as a MULTIPLE OF 150. Flamme stripes have an interval of 150.
         const shipSplitTime = 5100;
@@ -20,7 +21,9 @@ class HomePage extends React.Component {
         const systemsOnlineDuration = 3000;
 
         const startTime = 7000;
-
+        // console.log(navigator.serviceWorker)
+        // var monWorker = new Worker('../public/undock-worker.js');
+        // console.log(monWorker)
         return(
             <div className = "homepage">
                 <Background 
