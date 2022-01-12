@@ -133,15 +133,15 @@ export default class Spaceship extends React.Component {
         setTimeout(() => {shipRestart()},this.props.shipStartTime);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const spaceship = document.querySelector(".spaceship");
         const cargo = document.querySelector(".cargo");
 
         const spaceshipBoosters = document.querySelector(".spaceship-boosters");
         const cargoBoosters = document.querySelector(".cargo-boosters");
 
-        this.shipTranslateIn();
-        this.defaultFlameSequence([spaceshipBoosters, cargoBoosters]);
+        await this.shipTranslateIn();
+        await this.defaultFlameSequence([spaceshipBoosters, cargoBoosters]);
         
         const undockSequence = () => {
             this.shipUndock(spaceship, cargo);

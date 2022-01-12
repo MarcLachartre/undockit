@@ -140,7 +140,6 @@ export default class Background extends React.Component {
 				
 				document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
 					// star.classList.toggle("ease-out-toggle")
-					console.log(Date.now())
 
 					const xTranslation = star.attributes.xTranslation.value;
 					star.style.transitionTimingFunction = "ease-out";
@@ -166,6 +165,7 @@ export default class Background extends React.Component {
 					star.style.width = star.style.height;
 					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(0deg)`;
 				})
+				timerWorker.terminate()
 			}
 		})
 
