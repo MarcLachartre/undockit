@@ -10,8 +10,6 @@ class HomePage extends React.Component {
 		return (maxAnimationDuration * 100 / maxXTranslation)
 	}
 
-
-
     render() { //Important: all timings need to be done as a MULTIPLE OF 150. Flamme stripes have an interval of 150.
         const shipSplitTime = 5100;
         const shipSplitDuration = 3000;

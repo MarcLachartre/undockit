@@ -157,7 +157,7 @@ export default class Background extends React.Component {
 				})
 			
 				// console.log(Date.now()- start);
-			}.bind(this), (this.props.screenClearedTime*1000)-100)
+			}.bind(this), (this.props.screenClearedTime*1000))
 
 			setTimeout(function() {
 				// console.log(Date.now()- start);
