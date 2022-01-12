@@ -130,10 +130,6 @@ export default class Background extends React.Component {
 		const timerWorker = new Worker("undock-worker.js")
 		timerWorker.postMessage("startcount")
 		timerWorker.addEventListener("message", (event) => {
-			// console.log(event.data)
-			console.log(Number((this.props.screenClearedTime*10).toFixed(0)))
-			console.log(Number(((this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*10).toFixed(0)))
-
 			if (Number(event.data) === 0) {
 							document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
 								const xTranslation = star.attributes.xTranslation.value;
@@ -141,13 +137,20 @@ export default class Background extends React.Component {
 								star.style.transform = `translateX(-${xTranslation}vw)`;
 							});
 						} else if (Number(event.data) === Number((this.props.screenClearedTime*10).toFixed(0))) {
+							const a = Date.now()
+							
+							const cul = document.createElement("div")
+							cul.innerHTML = a
+							cul.style.color = "white"
+							document.querySelector(".homepage").appendChild(cul)
+							
 							document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
 								// star.classList.toggle("ease-out-toggle")
 								const xTranslation = star.attributes.xTranslation.value;
 								star.style.transitionTimingFunction = "ease-out";
 								star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
 								if (window.matchMedia("(min-width: 1200px)").matches === true) {
-									star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89.5deg)`;
+									star.style.transform = `translate(${-xTranslation -xTranslation/2}vw) rotateY(89.7deg) `;
 								} else if (window.matchMedia("(min-width: 992px)").matches === true) {
 									star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89deg)`;
 								} else if (window.matchMedia("(min-width: 480px)").matches === true) {
@@ -159,7 +162,13 @@ export default class Background extends React.Component {
 								
 								star.children[0].style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
 								star.children[0].style.opacity = 0; 
+								
 							})
+							const bite = document.createElement("div")
+							bite.innerHTML = Date.now() - a
+							bite.style.color = "white"
+							document.querySelector(".homepage").appendChild(bite)
+							console.log(Date.now())
 						} else if (Number(event.data) === Number(((this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*10).toFixed(0))) {
 							document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
 								const xTranslation = star.attributes.xTranslation.value;
