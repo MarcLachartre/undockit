@@ -127,92 +127,92 @@ export default class Background extends React.Component {
 
 		//////////////////////////////////////////////////////////////////////////////
 
-		// const timerWorker = new Worker("undock-worker.js")
-		// timerWorker.postMessage("backgroundcount")
-		// timerWorker.addEventListener("message", (event) => {
-		// 	if (Number(event.data) === 0) {
-		// 		document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-		// 			const xTranslation = star.attributes.xTranslation.value;
-		// 			star.style.transitionDuration = `${this.props.screenClearedTime}s`;
-		// 			star.style.transform = `translateX(-${xTranslation}vw)`;
-		// 		});
-		// 	} else if (Number(event.data) === Number((this.props.screenClearedTime*10).toFixed(0))-2) {
-				
-		// 		document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-		// 			// star.classList.toggle("ease-out-toggle")
-		// 			console.log(Date.now())
-
-		// 			const xTranslation = star.attributes.xTranslation.value;
-		// 			star.style.transitionTimingFunction = "ease-out";
-		// 			star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
-		// 			if (window.matchMedia("(min-width: 1200px)").matches === true) {
-		// 				star.style.transform = `translate(${-xTranslation -xTranslation/2}vw) rotateY(89.5deg) `;
-		// 			} else if (window.matchMedia("(min-width: 992px)").matches === true) {
-		// 				star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89deg)`;
-		// 			} else if (window.matchMedia("(min-width: 480px)").matches === true) {
-		// 				star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(88.2deg)`;
-		// 			} else if (window.matchMedia("(min-width: 320px)").matches === true) {
-		// 				star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(85deg)`;
-		// 			} 
-					
-		// 			star.children[0].style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
-		// 			star.children[0].style.opacity = 0; 
-		// 		})
-
-		// 	} else if (Number(event.data) === Number(((this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*10).toFixed(0))-2) {
-		// 		document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-		// 			const xTranslation = star.attributes.xTranslation.value;
-		// 			star.style.transitionDuration = "0s";
-		// 			star.style.width = star.style.height;
-		// 			star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(0deg)`;
-		// 		})
-		// 	}
-		// })
-
-		//////////////////////////////////////////////////////////////////////////////
-
-		setTimeout(function() { // first the transition runs linear until all default star cleared the screen. We have to calculate the time it takes for the slowest default star to go away from the screen.
+		const timerWorker = new Worker("undock-worker.js")
+		timerWorker.postMessage("backgroundcount")
+		timerWorker.addEventListener("message", (event) => {
+			if (Number(event.data) === 0) {
 				document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
 					const xTranslation = star.attributes.xTranslation.value;
 					star.style.transitionDuration = `${this.props.screenClearedTime}s`;
 					star.style.transform = `translateX(-${xTranslation}vw)`;
-				})
-			}.bind(this), 0)
+				});
+			} else if (Number(event.data) === Number((this.props.screenClearedTime*10).toFixed(0))-2) {
+				
+				document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
+					// star.classList.toggle("ease-out-toggle")
+					console.log(Date.now())
 
-			setTimeout(function() { // once all the default stars cleared the screen, we can start slowing down the stars with transtion property
-			// console.log(Date.now()- start)
-			document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-				const xTranslation = star.attributes.xTranslation.value;
-				star.style.transitionTimingFunction = "ease-out";
-				star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
-				if (window.matchMedia("(min-width: 1200px)").matches === true) {
-					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89.5deg)`;
-				} else if (window.matchMedia("(min-width: 992px)").matches === true) {
-					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89deg)`;
-				} else if (window.matchMedia("(min-width: 480px)").matches === true) {
-					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(88.2deg)`;
-				} else if (window.matchMedia("(min-width: 320px)").matches === true) {
-					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(85deg)`;
-				} 
+					const xTranslation = star.attributes.xTranslation.value;
+					star.style.transitionTimingFunction = "ease-out";
+					star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
+					if (window.matchMedia("(min-width: 1200px)").matches === true) {
+						star.style.transform = `translate(${-xTranslation -xTranslation/2}vw) rotateY(89.5deg) `;
+					} else if (window.matchMedia("(min-width: 992px)").matches === true) {
+						star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89deg)`;
+					} else if (window.matchMedia("(min-width: 480px)").matches === true) {
+						star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(88.2deg)`;
+					} else if (window.matchMedia("(min-width: 320px)").matches === true) {
+						star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(85deg)`;
+					} 
+					
+					star.children[0].style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
+					star.children[0].style.opacity = 0; 
+				})
+
+			} else if (Number(event.data) === Number(((this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*10).toFixed(0))-2) {
+				document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
+					const xTranslation = star.attributes.xTranslation.value;
+					star.style.transitionDuration = "0s";
+					star.style.width = star.style.height;
+					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(0deg)`;
+				})
+			}
+		})
+
+		//////////////////////////////////////////////////////////////////////////////
+
+		// setTimeout(function() { // first the transition runs linear until all default star cleared the screen. We have to calculate the time it takes for the slowest default star to go away from the screen.
+		// 		document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
+		// 			const xTranslation = star.attributes.xTranslation.value;
+		// 			star.style.transitionDuration = `${this.props.screenClearedTime}s`;
+		// 			star.style.transform = `translateX(-${xTranslation}vw)`;
+		// 		})
+		// 	}.bind(this), 0)
+
+		// 	setTimeout(function() { // once all the default stars cleared the screen, we can start slowing down the stars with transtion property
+		// 	// console.log(Date.now()- start)
+		// 	document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
+		// 		const xTranslation = star.attributes.xTranslation.value;
+		// 		star.style.transitionTimingFunction = "ease-out";
+		// 		star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
+		// 		if (window.matchMedia("(min-width: 1200px)").matches === true) {
+		// 			star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89.5deg)`;
+		// 		} else if (window.matchMedia("(min-width: 992px)").matches === true) {
+		// 			star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89deg)`;
+		// 		} else if (window.matchMedia("(min-width: 480px)").matches === true) {
+		// 			star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(88.2deg)`;
+		// 		} else if (window.matchMedia("(min-width: 320px)").matches === true) {
+		// 			star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(85deg)`;
+		// 		} 
 				
 				
-				star.children[0].style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
-				star.children[0].style.opacity = 0; 
-			})
+		// 		star.children[0].style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
+		// 		star.children[0].style.opacity = 0; 
+		// 	})
 		
-			// console.log(Date.now()- start);
-		}.bind(this), (this.props.screenClearedTime*1000))
+		// 	// console.log(Date.now()- start);
+		// }.bind(this), (this.props.screenClearedTime*1000))
 
-		setTimeout(function() {
-			// console.log(Date.now()- start);
-			// console.log((this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*1000)
-			document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-				const xTranslation = star.attributes.xTranslation.value;
-				star.style.transitionDuration = "0s";
-				star.style.width = star.style.height;
-				star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(0deg)`;
-				})
-		}, (this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*1000);
+		// setTimeout(function() {
+		// 	// console.log(Date.now()- start);
+		// 	// console.log((this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*1000)
+		// 	document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
+		// 		const xTranslation = star.attributes.xTranslation.value;
+		// 		star.style.transitionDuration = "0s";
+		// 		star.style.width = star.style.height;
+		// 		star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(0deg)`;
+		// 		})
+		// }, (this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*1000);
 		
 	}
 
