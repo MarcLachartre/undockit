@@ -41,7 +41,7 @@ export default class Spaceship extends React.Component {
 
     defaultFlameSequence(boosters) { // boosters need to be a array
         let last = Date.now(); // timestamp of the last sequence() call
-        
+
         let i = 0; // i will start to increment when user starts the undock sequence
         const sequence = () => {
             if (Date.now() >= last + 150) { // if current timestamp is = or > to last timestamp, execute the following code and reset last to current timestamp
