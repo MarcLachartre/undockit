@@ -19,9 +19,7 @@ class HomePage extends React.Component {
         const systemsOnlineDuration = 3000;
 
         const startTime = 7000;
-        // console.log(navigator.serviceWorker)
-        // var monWorker = new Worker('../public/undock-worker.js');
-        // console.log(monWorker)
+
         return(
             <div className = "homepage">
                 <Background 

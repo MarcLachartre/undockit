@@ -9,19 +9,15 @@ import '../src/css/overlay.scss';
 
 export default function App({ Component }) {
     useEffect(() => {
-        if("serviceWorker" in navigator) {
-          window.addEventListener("load", function () {
-           navigator.serviceWorker.register("undock-worker.js").then(
-              function (registration) {
-                console.log("Service Worker registration successful with scope: ", registration.scope);
-              },
-              function (err) {
-                console.log("Service Worker registration failed: ", err);
-              }
-            );
-          });
-        }
-      }, [])
+    // const worker = new Worker("undock-worker.js")
+    //   window.addEventListener("keyup", ()=> {
+    //     worker.postMessage("startcount")
+    //     worker.addEventListener('message', (event) => {
+    //       console.log(`Received message from worker: ${event.data}`)
+    //       worker.terminate()
+    //   });
+    // })
+    }, [])
     
     return (
         <>

@@ -9,7 +9,6 @@ import flame3 from '../../images/flame-sprite-3.png';
 
 export default class Spaceship extends React.Component {  
     
-    
     nextSprite(beforeSprites, afterSprites) {
         beforeSprites.forEach(f => {f.style.opacity = "0"});
         afterSprites.forEach(f => {f.style.opacity = "1"});
