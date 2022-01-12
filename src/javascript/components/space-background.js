@@ -139,13 +139,12 @@ export default class Background extends React.Component {
 						} else if (Number(event.data) === Number((this.props.screenClearedTime*10).toFixed(0))) {
 							const a = Date.now()
 							
-							const cul = document.createElement("div")
-							cul.innerHTML = a
-							cul.style.color = "white"
-							document.querySelector(".homepage").appendChild(cul)
+							
 							
 							document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
 								// star.classList.toggle("ease-out-toggle")
+								console.log(Date.now())
+
 								const xTranslation = star.attributes.xTranslation.value;
 								star.style.transitionTimingFunction = "ease-out";
 								star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
@@ -162,13 +161,13 @@ export default class Background extends React.Component {
 								
 								star.children[0].style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
 								star.children[0].style.opacity = 0; 
-								
+								const cul = document.createElement("div")
+							cul.innerHTML = Date.now()
+							cul.style.color = "white"
+							document.querySelector(".homepage").appendChild(cul)
+
 							})
-							const bite = document.createElement("div")
-							bite.innerHTML = Date.now() - a
-							bite.style.color = "white"
-							document.querySelector(".homepage").appendChild(bite)
-							console.log(Date.now())
+
 						} else if (Number(event.data) === Number(((this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*10).toFixed(0))) {
 							document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
 								const xTranslation = star.attributes.xTranslation.value;
