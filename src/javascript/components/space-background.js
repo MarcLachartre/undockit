@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default class Background extends React.Component {
-	addStarsToBackground(amount, limit, easeoutStars, defaultEndStars) { //adding stars to the background and preparing them for their animation (we add them to the "left" of the screen and animate them to the right). amount is the amount of stars to add, limit is the number for which we will change the type of star.
+	addStarsToBackground(amount, limit, easeoutStars, defaultEndStars) { //adding stars to the background and preparing them for their animation (we add them to the "left" of the screen and animate them to the right). amount is the amount of stars to add, limit is the number for which we will change the style of star, easeOutStars if set to true defines if the star will slowdown and stop on user input, defaultEndStars are the stars that will restart.
 		for (let i = 0; i < amount ; i ++) {
 			const star = document.createElement("div");
 			star.classList.add("star");
@@ -56,11 +56,11 @@ export default class Background extends React.Component {
 	}
 
 	randomNumber(min, max) {
-		return Number(Math.random() * (max - min + 1) + min)
+		return Number(Math.random() * (max - min + 1) + min);
 	}
 	
 	starWidth(duration, translation, maxTranslation, maxDuration) { 
-		return (translation !== undefined) ? ((maxDuration - ((this.props.screenClearedTime * maxTranslation)/translation))*2) + 6 : ((( 10 - Number(duration)) * 2) + 6)	
+		return (translation !== undefined) ? ((maxDuration - ((this.props.screenClearedTime * maxTranslation)/translation))*2) + 6 : ((( 10 - Number(duration)) * 2) + 6);
 	}
 
 
@@ -74,150 +74,46 @@ export default class Background extends React.Component {
 		return (Number(star.getBoundingClientRect().x) > window.innerWidth + Number((star.style.width).substring(0, star.style.width.length - 2))*10);
 	}
 
-	async startStarEaseOut() { // this will be split in two transitions. The first transition will mimic the default stars animation until the default stars are cleared from the screen. The second one will be the ease out stars.
-		
-		// let i = 0
-		// const start = Date.now()
-		// const sequence = () => {
-		// 	if (Date.now() - start >= 100) {
-		// 		if (i === 0) {
-		// 			document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-		// 				const xTranslation = star.attributes.xTranslation.value;
-		// 				star.style.transitionDuration = `${this.props.screenClearedTime}s`;
-		// 				star.style.transform = `translateX(-${xTranslation}vw)`;
-		// 			});
-		// 		} else if (i === Number((this.props.screenClearedTime*10).toFixed(0))-2) {
-					// document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-					// 	// star.classList.toggle("ease-out-toggle")
-					// 	const xTranslation = star.attributes.xTranslation.value;
-					// 	star.style.transitionTimingFunction = "ease-out";
-					// 	star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
-					// 	if (window.matchMedia("(min-width: 1200px)").matches === true) {
-					// 		star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89.5deg)`;
-					// 	} else if (window.matchMedia("(min-width: 992px)").matches === true) {
-					// 		star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89deg)`;
-					// 	} else if (window.matchMedia("(min-width: 480px)").matches === true) {
-					// 		star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(88.2deg)`;
-					// 	} else if (window.matchMedia("(min-width: 320px)").matches === true) {
-					// 		star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(85deg)`;
-					// 	} 
-						
-						
-					// 	star.children[0].style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
-					// 	star.children[0].style.opacity = 0; 
-					// })
-		// 		} else if (i === Number(((this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*10).toFixed(0))) {
-		// 			document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-		// 				const xTranslation = star.attributes.xTranslation.value;
-		// 				star.style.transitionDuration = "0s";
-		// 				star.style.width = star.style.height;
-		// 				star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(0deg)`;
-		// 			})
-		// 		}
-		
-		// 		i++
-		// 		start = Date.now()
-		// 		window.requestAnimationFrame(sequence)
-		// 		}
-		// 	window.requestAnimationFrame(sequence)
-		// }
-		// sequence()
-		
-		// const start = Date.now()
+	async startStarEaseOut(timer) { // this will be split in two transitions. The first transition will mimic the default stars animation until the default stars are cleared from the screen. The second one will be the ease out stars.
+		if (Number(timer) === 0) {
+			document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
+				const xTranslation = star.attributes.xTranslation.value;
+				star.style.transitionDuration = `${this.props.screenClearedTime}s`;
+				star.style.transform = `translateX(-${xTranslation}vw)`;
+			});
 
-		//////////////////////////////////////////////////////////////////////////////
-
-		const timerWorker = new Worker("undock-worker.js")
-		timerWorker.postMessage("backgroundcount")
-		timerWorker.addEventListener("message", (event) => {
-			if (Number(event.data) === 0) {
-				document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-					const xTranslation = star.attributes.xTranslation.value;
-					star.style.transitionDuration = `${this.props.screenClearedTime}s`;
-					star.style.transform = `translateX(-${xTranslation}vw)`;
-				});
-			} else if (Number(event.data) === Number((this.props.screenClearedTime*10).toFixed(0))-2) {
+		} else if (Number(timer) === Number((this.props.screenClearedTime*10).toFixed(0))) {
+			document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
+				const xTranslation = star.attributes.xTranslation.value;
+				star.style.transitionTimingFunction = "ease-out";
+				star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
+				if (window.matchMedia("(min-width: 1200px)").matches === true) {
+					star.style.transform = `translate(${-xTranslation -xTranslation/2}vw) rotateY(89.2deg) `;
+				} else if (window.matchMedia("(min-width: 992px)").matches === true) {
+					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89deg)`;
+				} else if (window.matchMedia("(min-width: 480px)").matches === true) {
+					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(88.2deg)`;
+				} else if (window.matchMedia("(min-width: 320px)").matches === true) {
+					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(85deg)`;
+				} 
 				
-				document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-					// star.classList.toggle("ease-out-toggle")
+				star.children[0].style.transitionDuration = `${this.props.screenClearedTime}s`;
+				star.children[0].style.opacity = 0; 
+			})
 
-					const xTranslation = star.attributes.xTranslation.value;
-					star.style.transitionTimingFunction = "ease-out";
-					star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
-					if (window.matchMedia("(min-width: 1200px)").matches === true) {
-						star.style.transform = `translate(${-xTranslation -xTranslation/2}vw) rotateY(89.5deg) `;
-					} else if (window.matchMedia("(min-width: 992px)").matches === true) {
-						star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89deg)`;
-					} else if (window.matchMedia("(min-width: 480px)").matches === true) {
-						star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(88.2deg)`;
-					} else if (window.matchMedia("(min-width: 320px)").matches === true) {
-						star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(85deg)`;
-					} 
-					
-					star.children[0].style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
-					star.children[0].style.opacity = 0; 
-				})
-
-			} else if (Number(event.data) === Number(((this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*10).toFixed(0))-2) {
-				document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-					const xTranslation = star.attributes.xTranslation.value;
-					star.style.transitionDuration = "0s";
-					star.style.width = star.style.height;
-					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(0deg)`;
-				})
-				timerWorker.terminate()
-			}
-		})
-
-		//////////////////////////////////////////////////////////////////////////////
-
-		// setTimeout(function() { // first the transition runs linear until all default star cleared the screen. We have to calculate the time it takes for the slowest default star to go away from the screen.
-		// 		document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-		// 			const xTranslation = star.attributes.xTranslation.value;
-		// 			star.style.transitionDuration = `${this.props.screenClearedTime}s`;
-		// 			star.style.transform = `translateX(-${xTranslation}vw)`;
-		// 		})
-		// 	}.bind(this), 0)
-
-		// 	setTimeout(function() { // once all the default stars cleared the screen, we can start slowing down the stars with transtion property
-		// 	// console.log(Date.now()- start)
-		// 	document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-		// 		const xTranslation = star.attributes.xTranslation.value;
-		// 		star.style.transitionTimingFunction = "ease-out";
-		// 		star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
-		// 		if (window.matchMedia("(min-width: 1200px)").matches === true) {
-		// 			star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89.5deg)`;
-		// 		} else if (window.matchMedia("(min-width: 992px)").matches === true) {
-		// 			star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89deg)`;
-		// 		} else if (window.matchMedia("(min-width: 480px)").matches === true) {
-		// 			star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(88.2deg)`;
-		// 		} else if (window.matchMedia("(min-width: 320px)").matches === true) {
-		// 			star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(85deg)`;
-		// 		} 
-				
-				
-		// 		star.children[0].style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
-		// 		star.children[0].style.opacity = 0; 
-		// 	})
-		
-		// 	// console.log(Date.now()- start);
-		// }.bind(this), (this.props.screenClearedTime*1000))
-
-		// setTimeout(function() {
-		// 	// console.log(Date.now()- start);
-		// 	// console.log((this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*1000)
-		// 	document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-		// 		const xTranslation = star.attributes.xTranslation.value;
-		// 		star.style.transitionDuration = "0s";
-		// 		star.style.width = star.style.height;
-		// 		star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(0deg)`;
-		// 		})
-		// }, (this.props.screenClearedTime + 2*(this.props.screenClearedTime/2))*1000);
-		
+		} else if (Number(timer) === Number(((2*this.props.screenClearedTime)*10).toFixed(0))) {
+			document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
+				const xTranslation = star.attributes.xTranslation.value;
+				star.style.transitionDuration = "0s";
+				star.style.width = star.style.height;
+				star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(0deg)`;
+			})
+		}
 	}
 
 	restartStarScroll() {
-		setTimeout(() => {
+		if (this.props.timer*100 === this.props.restartStarScrollTime) {
+			console.log("restart star scroll")
 			document.querySelectorAll("div.star.ease-out-star").forEach(star => {
 				this.isOnRightSideScreen(star) ? star.remove() : false;
 				const xTranslation = star.attributes.xTranslation.value;
@@ -227,34 +123,24 @@ export default class Background extends React.Component {
 			});
 
 			this.startStarScrolling("div.star.default-end", 90, 180);
-		}, this.props.restartStarScrollTime);
+		}
 	}
 
-	async componentDidMount() { // We create two animations here, one for the default behavior with the repeating stars scrolling from left to right giving an impression of fast space travel and then an animation with the stars easing out on screen, giving the impression of the fast space travel stopping. (ease out cannot be done with css property animation, the animation either pause or stops, we wait for the default animation stars to clear out and then we start a star ease out on screen with the "transition" css property)
-
-		await this.addStarsToBackground(300, 100, false, false); // We add the stars to the background
-		await this.addStarsToBackground(270, 90, true, false); // We have to create the easing out stars right at the beginning of page load. Creating them later causes the default stars animation to lag. The creation of elements with width forces the container to recalculate its size and it makes the default animation lag.
-		await this.addStarsToBackground(300, 100, false, true); // we alson need to create the star that we ease in when the small ship will start again.
+	async componentDidMount() { // We add here all the necessary stars for the animation.
+		await this.addStarsToBackground(300, 100, false, false); // We add the default stars to the background. (default animation)
+		await this.addStarsToBackground(270, 90, true, false); // We have to create the easing out stars right at the beginning of page load (these stars, when user gives input, will slow down on screen). Creating them later causes the default stars animation to lag. The creation of elements with a css width forces the container to recalculate its size and it makes the default running animation lag.
+		await this.addStarsToBackground(300, 100, false, true); // we also need to create the star that we ease in when the small ship will start again.
 		await this.startStarScrolling("div.star.default", 3, 10); // We make the default stars animate themselves (the default animation).
-		const starsSequence = () => { 
-			this.stopDefaultStarScrolling(); // default stars are stopping
-			this.startStarEaseOut(); // stars that will ease out on the screen start
-			this.restartStarScroll(); // after animation ends, new stars are scrolling slowly
-			document.querySelector(".message").removeEventListener("click", starsSequence);
-			document.querySelector(".message").removeEventListener("touchstart", starsSequence);
-			window.removeEventListener("keyup", starsSequence);
-		}
+	}
 
-		setTimeout(()=>{
-			document.querySelector(".message").addEventListener("click", starsSequence); // On user input see starsSequence code
-			document.querySelector(".message").addEventListener("touchstart", starsSequence);
-			window.addEventListener("keyup", starsSequence); 
-		}, this.props.startTime)
+	componentDidUpdate() { // We create two animations here, one for the default behavior with the repeating stars scrolling from right to left giving an impression of fast space travel and then an animation with the stars easing out on screen, giving the impression of the fast space travel stopping. (ease out cannot be done with css property animation, the animation either pause or stops, we wait for the default animation stars to clear out and then we start a star ease out on screen with the "transition" css property)
+		this.stopDefaultStarScrolling(this.props.timer); // default stars are stopping
+		this.restartStarScroll(this.props.timer); // stars that will ease out on the screen start
+		this.startStarEaseOut(this.props.timer);  // after animation ends, new stars are scrolling slowly
 	}
 
 	render() {
 		return <div className= "background-container">
-
 		</div>
 	}
 }

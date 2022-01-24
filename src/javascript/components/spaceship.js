@@ -8,6 +8,10 @@ import flame2 from '../../images/flame-sprite-2.png';
 import flame3 from '../../images/flame-sprite-3.png';
 
 export default class Spaceship extends React.Component {  
+    constructor(props) {
+        super(props);
+        this.state = {timer: 0}
+    }
     
     nextSprite(beforeSprites, afterSprites) {
         beforeSprites.forEach(f => {f.style.opacity = "0"});
@@ -40,11 +44,9 @@ export default class Spaceship extends React.Component {
     }
 
     defaultFlameSequence(boosters) { // boosters need to be a array
-        let last = Date.now(); // timestamp of the last sequence() call
-
         let i = 0; // i will start to increment when user starts the undock sequence
-        const sequence = () => {
-            if (Date.now() >= last + 150) { // if current timestamp is = or > to last timestamp, execute the following code and reset last to current timestamp
+            setInterval(() => {
+
                 boosters.forEach(booster => {
                     const sprite1 = booster.querySelectorAll("div.flame-sprite-1");
                     const sprite2 = booster.querySelectorAll("div.flame-sprite-2");
@@ -64,7 +66,7 @@ export default class Spaceship extends React.Component {
                     }
                 });
 
-                if (document.querySelector(".spaceship-container").getAttribute("undock-sequence") !== null) {
+                if (document.querySelector(".spaceship-container").getAttribute("boosters-undock-sequence") !== null) {
                     if (document.querySelector(".spaceship-container").getAttribute("stop-boosters")  !== null) {
                         this.stopBoosters(boosters[0], i, 150, this.props.spaceshipBoostersSeq.start, this.props.spaceshipBoostersSeq.end); // spaceship boosters
                         this.stopBoosters(boosters[1], i, 150, this.props.cargoBoostersSeq.start, this.props.cargoBoostersSeq.end); // cargo boosters
@@ -75,7 +77,6 @@ export default class Spaceship extends React.Component {
                     }
 
                     this.restartSpaceshipBoosters(boosters[0], i, 150, this.props.restartSpaceshipBoosters.start, this.props.restartSpaceshipBoosters.end); // restart spaceship boosters
-                    
            
                     if (i === 0) {
                         const startedAt = Date.now();
@@ -83,15 +84,11 @@ export default class Spaceship extends React.Component {
                             i = Math.floor((Date.now() - startedAt)/150)*150
                         })
                     }
-
+                   
                     i+=150;
+                    
                 }
-                last = Date.now();
-            }   
-            window.requestAnimationFrame(sequence);
-        }
-
-        sequence();  
+            }, 150);
     }
 
     shipTranslateIn() {
@@ -101,14 +98,13 @@ export default class Spaceship extends React.Component {
         }, 1);
     }
 
-    shipUndock(spaceship, cargo) {
-        const last = Date.now();
-        const startedAt = Date.now();
-        let i = 0;
+    shipUndock() {
+        const spaceship = document.querySelector(".spaceship");
+        const cargo = document.querySelector(".cargo");
         
         const shipSplit = () => {
             spaceship.classList.toggle("ship-split-transformation");
-            spaceship.style.transition = `transform ${this.props.shipSplitDuration}ms ease-in-out`;
+            spaceship.style.transition = `transform ${this.props.shipBackingDuration}ms ease-in-out`;
         }
 
         const shipUp = () => {   
@@ -116,27 +112,33 @@ export default class Spaceship extends React.Component {
             spaceship.classList.toggle("ship-up-transformation");             
             spaceship.style.transition = `transform ${this.props.shipUpDuration}ms ease-in-out`;
             spaceship.style.zIndex = "5";
-            cargo.style.transition = "transform 1950ms ease-in-out";
+            cargo.style.transition = `transform ${this.props.shipUpDuration}ms ease-in-out`;
             cargo.style.transform = "scale(0.8)";
         }
         
         const shipRestart = () => {
             spaceship.classList.toggle("ship-up-transformation");  
             spaceship.classList.toggle("ship-restart-transformation");  
-            spaceship.style.transition = "transform 4000ms cubic-bezier(1.000, 0.005, 0.745, 0.995)";
-            cargo.style.transition = "transform 5000ms cubic-bezier(1.000, 0.005, 0.745, 0.995)";
+            spaceship.style.transition = `transform ${this.props.shipRestartDuration}ms cubic-bezier(1.000, 0.005, 0.745, 0.995)`;
+            cargo.style.transition = `transform ${this.props.shipRestartDuration}ms cubic-bezier(1.000, 0.005, 0.745, 0.995)`;
             cargo.style.transform = "scale(0.8) translateX(-110vw)";
         }
 
-        setTimeout(() => {shipSplit()},this.props.shipSplitTime);
-        setTimeout(() => {shipUp()},this.props.shipUpTime);
-        setTimeout(() => {shipRestart()},this.props.shipStartTime);
+        if (this.props.timer*100 === this.props.shipBackingTime) {
+            shipSplit();
+        } else if (this.props.timer*100 === this.props.shipUpTime) {
+            shipUp();
+        } else if (this.props.timer*100 === this.props.shipRestartTime) {
+            console.log("shipt restart")
+            shipRestart();
+        }
+    }
+
+    componentDidUpdate() {
+        this.shipUndock(this.props.timer) 
     }
 
     async componentDidMount() {
-        const spaceship = document.querySelector(".spaceship");
-        const cargo = document.querySelector(".cargo");
-
         const spaceshipBoosters = document.querySelector(".spaceship-boosters");
         const cargoBoosters = document.querySelector(".cargo-boosters");
 
@@ -144,12 +146,8 @@ export default class Spaceship extends React.Component {
         await this.defaultFlameSequence([spaceshipBoosters, cargoBoosters]);
         
         const undockSequence = () => {
-            this.shipUndock(spaceship, cargo);
-            document.querySelector(".spaceship-container").setAttribute("undock-sequence", true);
+            document.querySelector(".spaceship-container").setAttribute("boosters-undock-sequence", true);
             document.querySelector(".spaceship-container").setAttribute("stop-boosters", true);
-            document.querySelector(".message").removeEventListener("click", undockSequence);
-            document.querySelector(".message").removeEventListener("touchstart", undockSequence);
-            window.removeEventListener("keyup", undockSequence);
         }
 
         setTimeout(() => {
