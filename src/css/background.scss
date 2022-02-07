@@ -31,10 +31,6 @@
     transform: translateX(0vw)
 }
 
-.ease-out-toggle {
-
-}
-
 .ease-in-star{
     transform: translateX(0vw)
 }
@@ -54,5 +50,4 @@
 }
 
 @keyframes slide { from { transform: translateX(0px); } to { transform: translateX(-450vw); }}
-// @keyframes smaller { from { transform: rotateY(); } to { transform: translateX(-450vw); }}
 

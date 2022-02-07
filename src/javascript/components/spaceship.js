@@ -7,7 +7,7 @@ import flame1 from '../../images/flame-sprite-1.png';
 import flame2 from '../../images/flame-sprite-2.png';
 import flame3 from '../../images/flame-sprite-3.png';
 
-export default class Spaceship extends React.Component {  
+export default class Spaceship extends React.PureComponent {  
     constructor(props) {
         super(props);
         this.state = {timer: 0}
@@ -18,91 +18,77 @@ export default class Spaceship extends React.Component {
         afterSprites.forEach(f => {f.style.opacity = "1"});
     }
 
-    restartSpaceshipBoosters(boosters, i, interval, start, end) {
+    restartSpaceshipBoosters(boosters, start, end) {
+        start = Math.floor(start/150);
+        end = Math.floor(end/150);
+        const endStartDifference = end - start;
+
         boosters.querySelectorAll("div.flame-sprite-1, div.flame-sprite-2, div.flame-sprite-3").forEach(flame=>{  
-            if (i === start) {
-                flame.style.display = "flex";         
-                flame.style.transform = `scale(${(1.3 + ((start-i)/interval)/10)})`;
-            } else if (i > (start + this.props.restartSpaceshipBoosters.intermediate) && i < end) {
+            if (this.props.spriteTimer >= start && this.props.spriteTimer < end) {
+                let i = this.props.spriteTimer - start;
                 flame.style.display = "flex"; // We repeat this line of code to make sure that when the user gets back on the screen, he will see the boosters flammes
-                flame.style.transform = `scale(${(1.3 + ((start-i + this.props.restartSpaceshipBoosters.intermediate)/interval)/10)})`;
-            } else if (i >= end) { 
+                flame.style.transform = `scale(${(1.5 - (0.5/endStartDifference)*i)})`;
+            } else if (this.props.spriteTimer >= end) { 
                 flame.style.display = "flex"; // We repeat this line of code to make sure that when the user gets back on the screen, he will see the boosters flammes
-                flame.style.transform = "scale(1.1)";
+                flame.style.transform = "scale(1)";
             }
         })
     }
 
-    stopBoosters(boosters, i, interval, start, end) {
-        boosters.querySelectorAll("div.flame-sprite-1, div.flame-sprite-2, div.flame-sprite-3").forEach(flame=>{
-            if (i > start && i < end) {
-                flame.style.transform = `scale(${1-(0.1*((i/interval)-start/interval))})`;           
-            } else if (i >= end) {
+    stopBoosters(boosters, start, end) {
+        start = Math.floor(start/150);
+        end = Math.floor(end/150);
+        const endStartDifference = end - start;
+
+        boosters.querySelectorAll("div.flame-sprite-1, div.flame-sprite-2, div.flame-sprite-3").forEach(flame => {    
+            if (this.props.spriteTimer > start && this.props.spriteTimer < end - 2) {
+                let i = this.props.spriteTimer - start;
+                flame.style.transform = `scale(${1 - (1/endStartDifference)*i})`;           
+            } else if (this.props.spriteTimer >= end - 2) {
                 flame.style.display = "none";
             }
         })
     }
 
-    defaultFlameSequence(boosters) { // boosters need to be a array
-        let i = 0; // i will start to increment when user starts the undock sequence
-            setInterval(() => {
-
-                boosters.forEach(booster => {
-                    const sprite1 = booster.querySelectorAll("div.flame-sprite-1");
-                    const sprite2 = booster.querySelectorAll("div.flame-sprite-2");
-                    const sprite3 = booster.querySelectorAll("div.flame-sprite-3");
-                    if (sprite1[0] !== undefined) {
-                        if (sprite1[0].style.opacity === "") {
-                            sprite1.forEach(sprite => {sprite.style.opacity = "1" });
-                        }
-    
-                        if (sprite1[0].style.opacity === "1") {
-                            this.nextSprite(sprite1, sprite2);
-                        } else if (sprite2[0].style.opacity === "1") {
-                            this.nextSprite(sprite2, sprite3);
-                        } else if (sprite3[0].style.opacity === "1") {
-                            this.nextSprite(sprite3, sprite1);
-                        }
-                    }
-                });
-
-                if (document.querySelector(".spaceship-container").getAttribute("boosters-undock-sequence") !== null) {
-                    if (document.querySelector(".spaceship-container").getAttribute("stop-boosters")  !== null) {
-                        this.stopBoosters(boosters[0], i, 150, this.props.spaceshipBoostersSeq.start, this.props.spaceshipBoostersSeq.end); // spaceship boosters
-                        this.stopBoosters(boosters[1], i, 150, this.props.cargoBoostersSeq.start, this.props.cargoBoostersSeq.end); // cargo boosters
-                    }
-
-                    if (i >= this.props.restartSpaceshipBoosters.start) {
-                        document.querySelector(".spaceship-container").removeAttribute("stop-boosters")
-                    }
-
-                    this.restartSpaceshipBoosters(boosters[0], i, 150, this.props.restartSpaceshipBoosters.start, this.props.restartSpaceshipBoosters.end); // restart spaceship boosters
-           
-                    if (i === 0) {
-                        const startedAt = Date.now();
-                        window.addEventListener("focus", ()=>{ // user leaves and gets back to screen, i updates to the current value so that animation doesnt pause
-                            i = Math.floor((Date.now() - startedAt)/150)*150
-                        })
-                    }
-                   
-                    i+=150;
-                    
+    defaultBoostersSequence(boosters) { // boosters needs to be a array
+        boosters.forEach(booster => {
+            const sprite1 = booster.querySelectorAll("div.flame-sprite-1");
+            const sprite2 = booster.querySelectorAll("div.flame-sprite-2");
+            const sprite3 = booster.querySelectorAll("div.flame-sprite-3");
+            if (sprite1[0] !== undefined) {
+                if (sprite1[0].style.opacity === "") {
+                    sprite1.forEach(sprite => {sprite.style.opacity = "1" });
                 }
-            }, 150);
+
+                if (sprite1[0].style.opacity === "1") {
+                    this.nextSprite(sprite1, sprite2);
+                } else if (sprite2[0].style.opacity === "1") {
+                    this.nextSprite(sprite2, sprite3);
+                } else if (sprite3[0].style.opacity === "1") {
+                    this.nextSprite(sprite3, sprite1);
+                }
+            }
+        })
+    }
+
+    startAnimationBoostersSequence(boosters) {
+        this.stopBoosters(boosters[0], this.props.spaceshipBoostersSeq.start, this.props.spaceshipBoostersSeq.end); // spaceship boosters
+        this.stopBoosters(boosters[1], this.props.cargoBoostersSeq.start, this.props.cargoBoostersSeq.end); // cargo boosters
+        this.restartSpaceshipBoosters(boosters[0], this.props.restartSpaceshipBoosters.start, this.props.restartSpaceshipBoosters.end); // restart spaceship boosters
     }
 
     shipTranslateIn() {
-        document.querySelector(".spaceship-container").style.transition = "transform 6s ease-out"
-        setTimeout(() => {
-            document.querySelector(".spaceship-container").style.transform = "translateX(0px)"
-        }, 1);
+        window.addEventListener("load", ()=> {
+            document.querySelector(".spaceship-container").style.transform = "translateX(0px)";
+            document.querySelector(".spaceship-container").style.transition = `transform ${this.props.shipTranslateInDuration/1000}s ease-out ${this.props.shipTranslateInDelay/1000}s`
+        })
     }
 
     shipUndock() {
         const spaceship = document.querySelector(".spaceship");
         const cargo = document.querySelector(".cargo");
         
-        const shipSplit = () => {
+        const shipBacking = () => {
             spaceship.classList.toggle("ship-split-transformation");
             spaceship.style.transition = `transform ${this.props.shipBackingDuration}ms ease-in-out`;
         }
@@ -124,37 +110,35 @@ export default class Spaceship extends React.Component {
             cargo.style.transform = "scale(0.8) translateX(-110vw)";
         }
 
-        if (this.props.timer*100 === this.props.shipBackingTime) {
-            shipSplit();
-        } else if (this.props.timer*100 === this.props.shipUpTime) {
+        if (this.props.animationTimer*100 === this.props.shipBackingTime) {
+            console.log("ship back")
+            shipBacking();
+        } else if (this.props.animationTimer*100 === this.props.shipUpTime) {
+            console.log("ship up")
             shipUp();
-        } else if (this.props.timer*100 === this.props.shipRestartTime) {
-            console.log("shipt restart")
+        } else if (this.props.animationTimer*100 === this.props.shipRestartTime) {
+            console.log("ship restart")
             shipRestart();
         }
     }
 
-    componentDidUpdate() {
-        this.shipUndock(this.props.timer) 
-    }
-
-    async componentDidMount() {
+    componentDidUpdate(prevProps) {
         const spaceshipBoosters = document.querySelector(".spaceship-boosters");
         const cargoBoosters = document.querySelector(".cargo-boosters");
-
-        await this.shipTranslateIn();
-        await this.defaultFlameSequence([spaceshipBoosters, cargoBoosters]);
-        
-        const undockSequence = () => {
-            document.querySelector(".spaceship-container").setAttribute("boosters-undock-sequence", true);
-            document.querySelector(".spaceship-container").setAttribute("stop-boosters", true);
+        if (this.props.animationTimer !== prevProps.animationTimer) {
+            this.shipUndock();
         }
 
-        setTimeout(() => {
-            document.querySelector(".message").addEventListener("click", undockSequence);
-            document.querySelector(".message").addEventListener("touchstart", undockSequence);
-            window.addEventListener("keyup", undockSequence);
-        },this.props.startTime)
+        if (this.props.spriteTimer !== prevProps.spriteTimer) {
+            this.defaultBoostersSequence([spaceshipBoosters, cargoBoosters]);
+            if (this.props.startAnimation === true) {
+                this.startAnimationBoostersSequence([spaceshipBoosters, cargoBoosters]);
+            }
+        }
+    }
+
+    componentDidMount() {
+        this.shipTranslateIn();
     }
 
 
