@@ -22,9 +22,9 @@ export default class Background extends React.Component {
 				const xTranslation = this.randomNumber(99, 230);
 				star.style.width = `${this.starWidth(undefined, xTranslation, 450, 10)}vw`;
 				star.setAttribute("xTranslation", xTranslation);
+				star.setAttribute("i", i);
 				const starEaseOutStyle = this.createEaseOutStyle(star, i, xTranslation);
 				css = css.concat(' ', starEaseOutStyle)
-			// console.log(css)
 				
 			} else if (defaultEndStars === true) { // initializing slow scrolling stars for the end of the animation when background starts to move again
 				star.classList.add("default-end");
@@ -38,22 +38,20 @@ export default class Background extends React.Component {
 		}
 		if (easeoutStars === true) {	
 			console.log(css)
+		
+    		const head = document.head || document.getElementsByTagName('head')[0];
+    		const style = document.createElement('style');
+
+			head.appendChild(style);
+
+			style.type = 'text/css';
+			if (style.styleSheet){
+			// This is required for IE8 and below.
+			style.styleSheet.cssText = css;
+			} else {
+			style.appendChild(document.createTextNode(css));
+			}
 		}
-		// if (easeoutStars === true) {
-		// 	// const css = 'body { background: red; }';
-    	// 	const head = document.head || document.getElementsByTagName('head')[0];
-    	// 	const style = document.createElement('style');
-
-		// 	head.appendChild(style);
-
-		// 	style.type = 'text/css';
-		// 	if (style.styleSheet){
-		// 	// This is required for IE8 and below.
-		// 	style.styleSheet.cssText = css;
-		// 	} else {
-		// 	style.appendChild(document.createTextNode(css));
-		// 	}
-		// }
 
 	}
 
@@ -102,25 +100,19 @@ export default class Background extends React.Component {
 	}
 
 	createEaseOutStyle(star, i, xTranslation) {
-		// console.log(i)
-		const starEaseOutStyle = `star-ease-out-${i} {transitionTimingFunction: ease-out; transitionDuration: ${2*(this.props.screenClearedTime/2)}s;}`;
-		console.log(starEaseOutStyle)
-// {/* <div class="star ease-out-star" xtranslation="209.56450005827463" style="top: 86.9vh; left: 293.583vw; height: 5px; width: 5px; transition-duration: 0s; transform: translateX(-314.347vw) rotateY(0deg); transition-timing-function: ease-out;"><div class="star-shade" style="transition-duration: 2.22222s; opacity: 0;"></div></div> */}
-		// const xTranslation = star.attributes.xTranslation.value;
-		// 	// star.style.transitionTimingFunction = "ease-out";
-		// 	// star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
-		// 	// if (window.matchMedia("(min-width: 1200px)").matches === true) {
-		// 	// 	star.style.transform = `translate(${-xTranslation -xTranslation/2}vw) rotateY(89.2deg) `;
-		// 	// } else if (window.matchMedia("(min-width: 992px)").matches === true) {
-		// 	// 	star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89deg)`;
-		// 	// } else if (window.matchMedia("(min-width: 480px)").matches === true) {
-		// 	// 	star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(88.2deg)`;
-		// 	// } else if (window.matchMedia("(min-width: 320px)").matches === true) {
-		// 	// 	star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(85deg)`;
-		// 	// } 
-			
-		// 	// star.children[0].style.transitionDuration = `${this.props.screenClearedTime}s`;
-		// 	// star.children[0].style.opacity = 0; 
+		console.log(document.head)
+		let starEaseOutStyle = " "
+
+			if (window.matchMedia("(min-width: 1200px)").matches === true) {
+				starEaseOutStyle = `.star-ease-out-${i} {transition-timing-function: ease-out; transition-duration: ${2*this.props.screenClearedTime}s !important; transition-delay: ${this.props.screenClearedTime} !important; transform: translate(${-xTranslation -xTranslation/2}vw) rotateY(89.2deg) !important}`;
+			} else if (window.matchMedia("(min-width: 992px)").matches === true) {
+				starEaseOutStyle = `.star-ease-out-${i} {transition-timing-function: ease-out; transition-duration: ${2*this.props.screenClearedTime}s; transition-delay: ${this.props.screenClearedTime}; transform: translate(${-xTranslation -xTranslation/2}vw) rotateY(89deg)}`;
+			} else if (window.matchMedia("(min-width: 480px)").matches === true) {
+				starEaseOutStyle = `.star-ease-out-${i} {transition-timing-function: ease-out; transition-duration: ${2*this.props.screenClearedTime}s; transition-delay: ${this.props.screenClearedTime}; transform: translate(${-xTranslation -xTranslation/2}vw) rotateY(88.4deg)}`;
+			} else if (window.matchMedia("(min-width: 320px)").matches === true) {
+				starEaseOutStyle = `.star-ease-out-${i} {transition-timing-function: ease-out; transition-duration: ${2*this.props.screenClearedTime}s; transition-delay: ${this.props.screenClearedTime}; transform: translate(${-xTranslation -xTranslation/2}vw) rotateY(85deg)}`;			
+			} 
+
 		return starEaseOutStyle
 	}
 
@@ -130,29 +122,36 @@ export default class Background extends React.Component {
 				const xTranslation = star.attributes.xTranslation.value;
 				star.style.transitionDuration = `${this.props.screenClearedTime}s`;
 				star.style.transform = `translateX(-${xTranslation}vw)`;
-			});
-
-		} else if (Number(timer) === Number((this.props.screenClearedTime*10).toFixed(0))) {
-			document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-				const xTranslation = star.attributes.xTranslation.value;
-				star.style.transitionTimingFunction = "ease-out";
-				star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
-				if (window.matchMedia("(min-width: 1200px)").matches === true) {
-					star.style.transform = `translate(${-xTranslation -xTranslation/2}vw) rotateY(89.2deg) `;
-				} else if (window.matchMedia("(min-width: 992px)").matches === true) {
-					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89deg)`;
-				} else if (window.matchMedia("(min-width: 480px)").matches === true) {
-					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(88.2deg)`;
-				} else if (window.matchMedia("(min-width: 320px)").matches === true) {
-					star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(85deg)`;
-				} 
-				
+				star.children[0].style.transitionDelay = `${this.props.screenClearedTime}s`;
 				star.children[0].style.transitionDuration = `${this.props.screenClearedTime}s`;
 				star.children[0].style.opacity = 0; 
-			})
+			
+				star.classList.add(`star-ease-out-${star.attributes.i.value}`)
+				// star.classList.toggle(`star-ease-out-${star.attributes.i.value}`)
+				// console.log(star.classList)
+			});
+
+		// } else if (Number(timer) === Number((this.props.screenClearedTime*10).toFixed(0))) {
+		// 	document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
+		// 		const xTranslation = star.attributes.xTranslation.value;
+		// 		star.style.transitionTimingFunction = "ease-out";
+		// 		star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
+		// 		if (window.matchMedia("(min-width: 1200px)").matches === true) {
+		// 			star.style.transform = `translate(${-xTranslation -xTranslation/2}vw) rotateY(89.2deg) `;
+		// 		} else if (window.matchMedia("(min-width: 992px)").matches === true) {
+		// 			star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89deg)`;
+		// 		} else if (window.matchMedia("(min-width: 480px)").matches === true) {
+		// 			star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(88.2deg)`;
+		// 		} else if (window.matchMedia("(min-width: 320px)").matches === true) {
+		// 			star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(85deg)`;
+		// 		} 
+				
+				
+		// 	})
 
 		} else if (Number(timer) === Number(((2*this.props.screenClearedTime)*10).toFixed(0))) {
 			document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
+				star.classList.remove(`star-ease-out-${star.attributes.i.value}`)
 				const xTranslation = star.attributes.xTranslation.value;
 				star.style.transitionDuration = "0s";
 				star.style.width = star.style.height;

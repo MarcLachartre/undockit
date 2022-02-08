@@ -38,8 +38,8 @@ class HomePage extends React.Component {
     }
 
     timings() {
-        const shipTranslateInDelay = 5300; // -> delay before ship starts translating in the screen
-        const shipTranslateInDuration = 7000; // -> duration of the ship translating in at the center of the screen
+        const shipTranslateInDelay = 0; // -> delay before ship starts translating in the screen
+        const shipTranslateInDuration = 1000; // -> duration of the ship translating in at the center of the screen
        
         const undockMessageDelay = 1300; // -> delay before undock message appears
         const undockMessageTime = shipTranslateInDelay + shipTranslateInDuration + undockMessageDelay; // -> undock message appears and is clickable to start the undocking sequence
