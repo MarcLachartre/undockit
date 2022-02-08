@@ -106,11 +106,11 @@ export default class Background extends React.Component {
 			if (window.matchMedia("(min-width: 1200px)").matches === true) {
 				starEaseOutStyle = `.star-ease-out-${i} {transition-timing-function: ease-out; transition-duration: ${2*this.props.screenClearedTime}s !important; transition-delay: ${this.props.screenClearedTime} !important; transform: translate(${-xTranslation -xTranslation/2}vw) rotateY(89.2deg) !important}`;
 			} else if (window.matchMedia("(min-width: 992px)").matches === true) {
-				starEaseOutStyle = `.star-ease-out-${i} {transition-timing-function: ease-out; transition-duration: ${2*this.props.screenClearedTime}s; transition-delay: ${this.props.screenClearedTime}; transform: translate(${-xTranslation -xTranslation/2}vw) rotateY(89deg)}`;
+				starEaseOutStyle = `.star-ease-out-${i} {transition-timing-function: ease-out; transition-duration: ${2*this.props.screenClearedTime}s !important; transition-delay: ${this.props.screenClearedTime} !important; transform: translate(${-xTranslation -xTranslation/2}vw) rotateY(89deg) !important}`;
 			} else if (window.matchMedia("(min-width: 480px)").matches === true) {
-				starEaseOutStyle = `.star-ease-out-${i} {transition-timing-function: ease-out; transition-duration: ${2*this.props.screenClearedTime}s; transition-delay: ${this.props.screenClearedTime}; transform: translate(${-xTranslation -xTranslation/2}vw) rotateY(88.4deg)}`;
+				starEaseOutStyle = `.star-ease-out-${i} {transition-timing-function: ease-out; transition-duration: ${2*this.props.screenClearedTime}s !important; transition-delay: ${this.props.screenClearedTime} !important; transform: translate(${-xTranslation -xTranslation/2}vw) rotateY(88.4deg) !important}`;
 			} else if (window.matchMedia("(min-width: 320px)").matches === true) {
-				starEaseOutStyle = `.star-ease-out-${i} {transition-timing-function: ease-out; transition-duration: ${2*this.props.screenClearedTime}s; transition-delay: ${this.props.screenClearedTime}; transform: translate(${-xTranslation -xTranslation/2}vw) rotateY(85deg)}`;			
+				starEaseOutStyle = `.star-ease-out-${i} {transition-timing-function: ease-out; transition-duration: ${2*this.props.screenClearedTime}s !important; transition-delay: ${this.props.screenClearedTime} !important; transform: translate(${-xTranslation -xTranslation/2}vw) rotateY(85deg) !important}`;			
 			} 
 
 		return starEaseOutStyle
@@ -120,14 +120,15 @@ export default class Background extends React.Component {
 		if (Number(timer) === 0) {
 			document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
 				const xTranslation = star.attributes.xTranslation.value;
+				// star.classList.add(`star-ease-out-${star.attributes.i.value}`);
 				star.style.transitionDuration = `${this.props.screenClearedTime}s`;
 				star.style.transform = `translateX(-${xTranslation}vw)`;
 				star.children[0].style.transitionDelay = `${this.props.screenClearedTime}s`;
 				star.children[0].style.transitionDuration = `${this.props.screenClearedTime}s`;
 				star.children[0].style.opacity = 0; 
 			
-				star.classList.add(`star-ease-out-${star.attributes.i.value}`)
-				// star.classList.toggle(`star-ease-out-${star.attributes.i.value}`)
+				
+				star.classList.toggle(`star-ease-out-${star.attributes.i.value}`)
 				// console.log(star.classList)
 			});
 
