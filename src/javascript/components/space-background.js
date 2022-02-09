@@ -120,35 +120,13 @@ export default class Background extends React.Component {
 		if (Number(timer) === 0) {
 			document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
 				const xTranslation = star.attributes.xTranslation.value;
-				// star.classList.add(`star-ease-out-${star.attributes.i.value}`);
 				star.style.transitionDuration = `${this.props.screenClearedTime}s`;
 				star.style.transform = `translateX(-${xTranslation}vw)`;
 				star.children[0].style.transitionDelay = `${this.props.screenClearedTime}s`;
 				star.children[0].style.transitionDuration = `${this.props.screenClearedTime}s`;
-				star.children[0].style.opacity = 0; 
-			
-				
+				star.children[0].style.opacity = 0; 			
 				star.classList.toggle(`star-ease-out-${star.attributes.i.value}`)
-				// console.log(star.classList)
 			});
-
-		// } else if (Number(timer) === Number((this.props.screenClearedTime*10).toFixed(0))) {
-		// 	document.querySelectorAll("div.star.ease-out-star").forEach((star) => {
-		// 		const xTranslation = star.attributes.xTranslation.value;
-		// 		star.style.transitionTimingFunction = "ease-out";
-		// 		star.style.transitionDuration = `${2*(this.props.screenClearedTime/2)}s`;
-		// 		if (window.matchMedia("(min-width: 1200px)").matches === true) {
-		// 			star.style.transform = `translate(${-xTranslation -xTranslation/2}vw) rotateY(89.2deg) `;
-		// 		} else if (window.matchMedia("(min-width: 992px)").matches === true) {
-		// 			star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(89deg)`;
-		// 		} else if (window.matchMedia("(min-width: 480px)").matches === true) {
-		// 			star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(88.2deg)`;
-		// 		} else if (window.matchMedia("(min-width: 320px)").matches === true) {
-		// 			star.style.transform = `translateX(${-xTranslation -xTranslation/2}vw) rotateY(85deg)`;
-		// 		} 
-				
-				
-		// 	})
 
 		} else if (Number(timer) === Number(((2*this.props.screenClearedTime)*10).toFixed(0))) {
 			document.querySelectorAll("div.star.ease-out-star").forEach((star) => {

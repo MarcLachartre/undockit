@@ -38,35 +38,39 @@ class HomePage extends React.Component {
     }
 
     timings() {
-        const shipTranslateInDelay = 0; // -> delay before ship starts translating in the screen
-        const shipTranslateInDuration = 1000; // -> duration of the ship translating in at the center of the screen
+        // All the variables below can be modified if there are " ** " commented next to it. 
+        // The other variables cannot really as their timings (delay and duration) are dependant from the other variables.
+        // Below, for each stage of the animation, you can modify duration and delay.
+
+        const shipTranslateInDelay = 0; // ** -> delay before ship starts translating in the screen
+        const shipTranslateInDuration = 7000; // ** -> duration of the ship translating in at the center of the screen
        
-        const undockMessageDelay = 1300; // -> delay before undock message appears
+        const undockMessageDelay = 1000; // ** -> delay before undock message appears
         const undockMessageTime = shipTranslateInDelay + shipTranslateInDuration + undockMessageDelay; // -> undock message appears and is clickable to start the undocking sequence
 
         const shipMinBackingTime = Math.ceil(Number((2*this.screenCleared(10, 450)*1000).toFixed(0))/150)*150; // -> Corresponds to the minimum time for the starts to stop.
-        const shipBackingDelay = 1300; // -> delay before ship backs after user input
+        const shipBackingDelay = 1000; // ** -> delay before ship backs after user input
         const shipBackingTime = shipMinBackingTime + shipBackingDelay; // -> time when ship starts to split after user input
-        const shipBackingDuration = 3300; // -> duration of the ship backing from cargo
+        const shipBackingDuration = 3000; // ** -> duration of the ship backing from cargo
 
-        const shipUpDelay = 1200; // -> delay before ship goes up after backing
+        const shipUpDelay = 1000; // ** -> delay before ship goes up after backing
         const shipUpTime = shipBackingTime + shipBackingDuration + shipBackingDelay + shipUpDelay; // -> time when ship starts to go up after backing
-        const shipUpDuration = 3100; // -> duration of the ship going up
+        const shipUpDuration = 3000; // ** -> duration of the ship going up
 
-        const displaySystemsOnlineDelay = 1300; // -> delay before the all systems online appears after the timer starts(in other words after user input)
+        const displaySystemsOnlineDelay = 1000; // ** -> delay before the all systems online appears after the timer starts(in other words after user input)
         const displaySystemsOnlineMsgTime = shipUpTime + shipUpDuration + displaySystemsOnlineDelay;// -> time when the all systems online appears after the timer starts(in other words after user input)
-        const displaySystemsOnlineMsgDuration = 3000; // -> duration of the all systems online message
+        const displaySystemsOnlineMsgDuration = 3000; // ** -> duration of the all systems online message
         
-        const shipRestartDelay = 1000; // -> delay before ship restarts after the all systems online message disappears
+        const shipRestartDelay = 1000; // ** -> delay before ship restarts after the all systems online message disappears
         const shipRestartTime = displaySystemsOnlineMsgTime + displaySystemsOnlineMsgDuration + shipRestartDelay; // -> time when ship restarts its boosters after all systems online message disappears
-        const shipRestartDuration = 5100; // -> duration of the ship restarting
+        const shipRestartDuration = 5000; // ** -> duration of the ship restarting
 
         const restartStarScrollTime = shipRestartTime; // -> star scrolling animation needs to be at the same time as when the ship restarts
 
         const stopBoostersDuration = Math.ceil(this.screenCleared(10, 450)*1000); // -> Corresponds to the stars slowing down animation
-        const spaceshipBoostersSeq = {start: (shipBackingTime - shipBackingDelay - stopBoostersDuration), end: (shipBackingTime - shipBackingDelay)}; // -> start corresponds to when the stars start to slow down, it ends at the same time 
-        const cargoBoostersSeq = {start:(shipBackingTime - shipBackingDelay - stopBoostersDuration), end: (shipBackingTime - shipBackingDelay)}; // -> start corresponds to when the stars start to slow down, it ends at the same time 
-        const restartSpaceshipBoosters = {start: shipRestartTime, end:shipRestartTime + shipRestartDuration};
+        const spaceshipBoostersSeq = {start: (shipBackingTime - shipBackingDelay - stopBoostersDuration), end: (shipBackingTime - shipBackingDelay)}; // -> ship seq start corresponds to when the stars start to slow down, it ends at the same time as the stars stop
+        const cargoBoostersSeq = {start:(shipBackingTime - shipBackingDelay - stopBoostersDuration), end: (shipBackingTime - shipBackingDelay)}; // -> booster seq start corresponds to when the stars start to slow down, it ends at the same time as the stars stop
+        const restartSpaceshipBoosters = {start: shipRestartTime, end:shipRestartTime + shipRestartDuration}; // -> ship boosters restart when ship restarts (flammes will be big on restart and slowly get back to normal when ship rejoins the center of the page)
 
         return {
             shipTranslateInDelay: shipTranslateInDelay, 
