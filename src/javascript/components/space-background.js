@@ -3,7 +3,7 @@ import React from 'react';
 export default class Background extends React.Component {
 	addStarsToBackground(amount, limit, easeoutStars, defaultEndStars) { //adding stars to the background and preparing them for their animation (we add them to the "left" of the screen and animate them to the right). amount is the amount of stars to add, limit is the number for which we will change the style of star, easeOutStars if set to true defines if the star will slowdown and stop on user input, defaultEndStars are the stars that will restart.		
 
-		const css = "";
+		let css = "";
 		for (let i = 0; i < amount ; i ++) {
 			const star = document.createElement("div");
 			star.classList.add("star");
