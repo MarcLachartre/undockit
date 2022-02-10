@@ -152,9 +152,9 @@ export default class Background extends React.Component {
 	}
 
 	async componentDidMount() { // We add here all the necessary stars for the animation.
-		await this.addStarsToBackground(270, 90, false, false); // We add the default stars to the background. (default animation)
-		await this.addStarsToBackground(240, 80, true, false); // We have to create the easing out stars right at the beginning of page load (these stars, when user gives input, will slow down on screen). Creating them later causes the default stars animation to lag. The creation of elements with a css width forces the container to recalculate its size and it makes the default running animation lag.
-		await this.addStarsToBackground(270, 90, false, true); // we also need to create the star that we ease in when the small ship will start again.
+		await this.addStarsToBackground(240, 80, false, false); // We add the default stars to the background. (default animation)
+		await this.addStarsToBackground(210, 70, true, false); // We have to create the easing out stars right at the beginning of page load (these stars, when user gives input, will slow down on screen). Creating them later causes the default stars animation to lag. The creation of elements with a css width forces the container to recalculate its size and it makes the default running animation lag.
+		await this.addStarsToBackground(240, 80, false, true); // we also need to create the star that we ease in when the small ship will start again.
 		await this.startStarScrolling("div.star.default", 3, 10); // We make the default stars animate themselves (the default animation).
 	}
 
