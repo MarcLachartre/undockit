@@ -9,13 +9,15 @@ import '../src/css/overlay.scss';
 
 export default function App({ Component }) {
 
-    useEffect(() => {
-        document.title = "Undock it!  🚀"
-      }, [])
+    // useEffect(() => {
+    //     document.title = "Undock it! 🚀"
+    //   }, [])
 
     return (
         <>
+        
         <Head>
+            <title>Undock it! 🚀</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <meta name= 'title' content= 'Undock it'/>
             <meta name= 'description' content= 'Press "start undock procedure" and travel to new horizons!'/>
