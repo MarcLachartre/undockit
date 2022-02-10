@@ -8,6 +8,11 @@ import '../src/css/spaceship.scss';
 import '../src/css/overlay.scss';
 
 export default function App({ Component }) {
+
+    useEffect(() => {
+        document.title = "Undock it!  🚀"
+      }, [])
+
     return (
         <>
         <Head>
