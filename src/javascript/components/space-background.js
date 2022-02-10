@@ -17,13 +17,13 @@ export default class Background extends React.Component {
 			star.style.height = `${this.randomNumber(2, 4).toFixed(0)}px`;
 			this.addTypeToStar(star, i, limit);
 
-			if (easeoutStars === true) { //initializing ease out stars by setting their width and xtranslation.
+			if (easeoutStars === true) { //initializing ease out stars by setting their width and xtranslation. 
 				star.classList.add("ease-out-star");
 				const xTranslation = this.randomNumber(99, 230);
 				star.style.width = `${this.starWidth(undefined, xTranslation, 450, 10)}vw`;
 				star.setAttribute("xTranslation", xTranslation);
 				star.setAttribute("i", i);
-				const starEaseOutStyle = this.createEaseOutStyle(star, i, xTranslation);
+				const starEaseOutStyle = this.createEaseOutStyle(i, xTranslation); // we create for each star its proper ease out class (we cannot do it with a css file because the transalation for each star is random, so we create it dynamically and toggle it at the start of the animation). We don't want to apply style to all thge stars with javascript during the animation because it causes the animation to lag.
 				css = css.concat(' ', starEaseOutStyle)
 				
 			} else if (defaultEndStars === true) { // initializing slow scrolling stars for the end of the animation when background starts to move again
@@ -37,8 +37,6 @@ export default class Background extends React.Component {
 			document.querySelector(".background-container").appendChild(star);
 		}
 		if (easeoutStars === true) {	
-			console.log(css)
-		
     		const head = document.head || document.getElementsByTagName('head')[0];
     		const style = document.createElement('style');
 
@@ -99,8 +97,7 @@ export default class Background extends React.Component {
 		return (Number(star.getBoundingClientRect().x) > window.innerWidth + Number((star.style.width).substring(0, star.style.width.length - 2))*10);
 	}
 
-	createEaseOutStyle(star, i, xTranslation) {
-		console.log(document.head)
+	createEaseOutStyle(i, xTranslation) {
 		let starEaseOutStyle = " "
 
 			if (window.matchMedia("(min-width: 1200px)").matches === true) {
@@ -164,7 +161,7 @@ export default class Background extends React.Component {
 	componentDidUpdate(prevProps) { // We create two animations here, one for the default behavior with the repeating stars scrolling from right to left giving an impression of fast space travel and then an animation with the stars easing out on screen, giving the impression of the fast space travel stopping. (ease out cannot be done with css property animation, the animation either pause or stops, we wait for the default animation stars to clear out and then we start a star ease out on screen with the "transition" css property)
 		if (prevProps.animationTimer !== this.props.animationTimer) {
 			this.stopDefaultStarScrolling(); // default stars are stopping
-			this.restartStarScroll(); // stars that will ease out on the screen start
+			this.restartStarScroll(); // stars that will ease out on the screen on restart
 			this.startStarEaseOut(this.props.animationTimer);  // after animation ends, new stars are scrolling slowly
 		}
 	}
