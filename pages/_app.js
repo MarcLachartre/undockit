@@ -23,7 +23,7 @@ export default function App({ Component }) {
             <meta property= 'og:title' content= 'Undock it' />
             <meta property= 'og:description' content= 'Press "start undock procedure" and travel to new horizons!' />
             <meta property= 'og:type' content= 'website' />
-            <meta property= 'og:url' content= '' />
+            <meta property= 'og:url' content= 'www.undockit.space' />
             <meta property= 'og:image' content= '' />
             <meta name= 'twitter:card' content= 'summary_large_image' />
             <meta name= 'twitter:title' content= 'Undock it' />
