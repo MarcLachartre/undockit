@@ -48,6 +48,8 @@ class HomePage extends React.Component {
         const undockMessageDelay = 1000; // ** -> delay before undock message appears
         const undockMessageTime = shipTranslateInDelay + shipTranslateInDuration + undockMessageDelay; // -> undock message appears and is clickable to start the undocking sequence
 
+        const startAnimationDelay = 5000; // ** -> delay before sthe whole undocking animation starts after user input.
+
         const shipMinBackingTime = Math.ceil(Number((2*this.screenCleared(10, 450)*1000).toFixed(0))/150)*150; // -> Corresponds to the minimum time for the starts to stop.
         const shipBackingDelay = 1000; // ** -> delay before ship backs after user input
         const shipBackingTime = shipMinBackingTime + shipBackingDelay; // -> time when ship starts to split after user input
@@ -75,7 +77,8 @@ class HomePage extends React.Component {
         return {
             shipTranslateInDelay: shipTranslateInDelay, 
             shipTranslateInDuration: shipTranslateInDuration, 
-            undockMessageTime: undockMessageTime, 
+            undockMessageTime: undockMessageTime,
+            startAnimationDelay: startAnimationDelay, 
             shipMinBackingTime: shipMinBackingTime,
             shipBackingDelay: shipBackingDelay,
             shipBackingTime: shipBackingTime,
@@ -100,10 +103,12 @@ class HomePage extends React.Component {
         const timer = this.timer(); // Sprite timer starts when component is mounted. (Interval 150ms)
 
         const startUndockTimer = () => { // callback for when the user starts the undock sequence, it starts the undocking sequence timer. (Interval 100ms)
-            timer.postMessage("start animation timer");
-            this.setState({
-                startAnimation: true
-            })
+            // setTimeout(()=>{
+                timer.postMessage("start animation timer");
+                this.setState({
+                    startAnimation: true
+                })
+            // }, this.timings().startAnimationDelay)
             // Following code prevents user to fire the animation several times;
             document.querySelector(".message").removeEventListener("click", startUndockTimer);
             document.querySelector(".message").removeEventListener("touchstart", startUndockTimer);
