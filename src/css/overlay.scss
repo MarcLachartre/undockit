@@ -31,7 +31,7 @@ to
   {opacity: 0}
 }
 
-@media (min-width: 320px) {
+@media (min-width: 320px) and (orientation: portrait) {
   .message {
     font-size: 15px;
     margin-top: 30px;
@@ -41,7 +41,17 @@ to
   }
 }
 
-@media (min-width: 480px) {
+@media (min-width: 320px) and (orientation: landscape) {
+  .message {
+    font-size: 10px;
+    margin-top: 10px;
+    line-height: 20px;
+    letter-spacing: 3px;
+    text-shadow: -1px 0 0 #fdff2a, -2px 0 0 #df4a42, 1px 0 0 #91fcfe, 2px 0 0 #4405fc;
+  }
+}
+
+@media (min-width: 480px) and (orientation: portrait){
   .message {
     font-size: 25px;
     margin-top: 70px;
@@ -50,10 +60,20 @@ to
     text-shadow: -2px 0 0 #fdff2a, -4px 0 0 #df4a42, 2px 0 0 #91fcfe, 4px 0 0 #4405fc;
   }
 }
+@media (min-width: 480px) and (orientation: landscape){
+  .message {
+    font-size: 15px;
+    margin-top: 25px;
+    line-height: 30px;
+    letter-spacing: 5px;
+    text-shadow: -2px 0 0 #fdff2a, -4px 0 0 #df4a42, 2px 0 0 #91fcfe, 4px 0 0 #4405fc;
+  }
+}
 
 @media (min-width: 992px) {
   .message {
     font-size: 40px;
+    margin-top: 60px;
     text-shadow: -3px 0 0 #fdff2a, -6px 0 0 #df4a42, 3px 0 0 #91fcfe, 6px 0 0 #4405fc;
   }
 }

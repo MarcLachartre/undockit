@@ -163,7 +163,7 @@
 }
 
 
-@media (min-width: 320px) {
+@media (min-width: 320px) and (orientation: portrait) {
     .spaceship {
         transform: translateX(-43px);
         width: 55px;
@@ -225,7 +225,132 @@
     }
 }
 
-@media (min-width: 480px) {
+@media (min-width: 320px) and (orientation: landscape) {
+    .spaceship {
+        transform: translateX(-43px);
+        width: 55px;
+    }
+    
+    .cargo {
+        width: 200px;
+        height: 400px;
+    }
+
+    .under-cargo {
+        transform: translateX(34px);
+    }
+
+    .cargo-boosters {
+        height: 27%;
+        transform: translateX(5px);
+        .flame-sprite-1 {
+            width: 20%
+        }
+        .flame-sprite-2 {
+            width: 25%
+        }
+        .flame-sprite-3 {
+            width: 25%
+        }
+    }
+
+    .spaceship-booster-up {
+        transform: translateY(-21px) scaleY(-1);
+    }
+    
+    .spaceship-booster-mid-up {
+        transform: translateY(-11px) scaleY(-1);
+    }
+    
+    .spaceship-booster-mid-down {   
+        transform: translateY(11px);
+    }
+    
+    .spaceship-booster-down { 
+        transform: translateY(21px);
+    }
+
+    .spaceship-boosters {
+        transform: translateX(-21.5px);
+    }
+
+    .ship-split-transformation {
+        transform: translateX(-80px);
+    }
+    
+    .ship-up-transformation {
+        transform: translateX(-80px) scale(1.2) ;
+    }
+    
+    .ship-restart-transformation {
+        transform: translateX(0px) scale(1.2);
+    }
+}
+
+@media (min-width: 480px) and (orientation: portrait) {
+    .spaceship {
+        transform: translateX(-96px);
+        width: 126px;
+    }
+    
+    .cargo {
+        width: 455px;
+        height: 400px;
+    }
+
+    .under-cargo {
+        transform: translateX(78px);
+    }
+
+    .cargo-boosters {
+        height: 60%;
+        transform: translateX(10px);
+        .flame-sprite-1 {
+            width: 20%
+        }
+        .flame-sprite-2 {
+            width: 25%
+        }
+        .flame-sprite-3 {
+            width: 25%
+        }
+    }
+
+    .spaceship-boosters {
+        transform: translateX(-49px);
+    }
+
+    .spaceship-booster-up {
+        transform: translateY(-51px) scaleY(-1);
+    }
+    
+    .spaceship-booster-mid-up {
+        transform: translateY(-29px) scaleY(-1);
+    }
+    
+    .spaceship-booster-mid-down {   
+        transform: translateY(29px);
+    }
+    
+    .spaceship-booster-down { 
+        transform: translateY(51px);
+    }
+
+    .ship-split-transformation {
+        transform: translateX(-180px);
+    }
+    
+    .ship-up-transformation {
+        transform: translateX(-180px) scale(1.2) ;
+    }
+    
+    .ship-restart-transformation {
+        transform: translateX(0px) scale(1.2);
+    }
+}
+
+
+@media (min-width: 480px) and (orientation: landscape) {
     .spaceship {
         transform: translateX(-96px);
         width: 126px;
