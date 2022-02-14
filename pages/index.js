@@ -42,7 +42,7 @@ class HomePage extends React.Component {
         // The other variables cannot really as their timings (delay and duration) are dependant from the other variables.
         // Below, for each stage of the animation, you can modify duration and delay.
 
-        const shipTranslateInDelay = 0; // ** -> delay before ship starts translating in the screen
+        const shipTranslateInDelay = 1500; // ** -> delay before ship starts translating in the screen
         const shipTranslateInDuration = 7000; // ** -> duration of the ship translating in at the center of the screen
        
         const undockMessageDelay = 1000; // ** -> delay before undock message appears
@@ -51,13 +51,13 @@ class HomePage extends React.Component {
         const startAnimationDelay = 0; // ** -> delay before the whole undocking animation starts after user input.
 
         const shipMinBackingTime = Math.ceil(Number((2*this.screenCleared(10, 450)*1000).toFixed(0))/150)*150; // -> Corresponds to the minimum time for the starts to stop.
-        const shipBackingDelay = 1000; // ** -> delay before ship backs after user input
+        const shipBackingDelay = 1300; // ** -> delay before ship backs after user input
         const shipBackingTime = shipMinBackingTime + shipBackingDelay; // -> time when ship starts to split after user input
-        const shipBackingDuration = 3000; // ** -> duration of the ship backing from cargo
+        const shipBackingDuration = 4000; // ** -> duration of the ship backing from cargo
 
-        const shipUpDelay = 1000; // ** -> delay before ship goes up after backing
+        const shipUpDelay = 500; // ** -> delay before ship goes up after backing
         const shipUpTime = shipBackingTime + shipBackingDuration + shipBackingDelay + shipUpDelay; // -> time when ship starts to go up after backing
-        const shipUpDuration = 3000; // ** -> duration of the ship going up
+        const shipUpDuration = 4000; // ** -> duration of the ship going up
 
         const displaySystemsOnlineDelay = 1000; // ** -> delay before the all systems online appears after the timer starts(in other words after user input)
         const displaySystemsOnlineMsgTime = shipUpTime + shipUpDuration + displaySystemsOnlineDelay;// -> time when the all systems online appears after the timer starts(in other words after user input)
