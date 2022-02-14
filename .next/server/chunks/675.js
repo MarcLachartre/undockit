@@ -97,7 +97,6 @@ function _objectWithoutPropertiesLoose(source, excluded) {
     }
     return target;
 }
-const loadedImageURLs = new Set();
 const allImgs = new Map();
 let perfObserver;
 const emptyDataURL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
@@ -267,7 +266,6 @@ function handleLoading(imgRef, src, layout, placeholder, onLoadingCompleteRef) {
                 if (!imgRef.current) {
                     return;
                 }
-                loadedImageURLs.add(src);
                 if (placeholder === 'blur') {
                     img.style.filter = '';
                     img.style.backgroundSize = '';
@@ -318,6 +316,7 @@ function Image(_param) {
         "placeholder",
         "blurDataURL"
     ]);
+    var ref1;
     const imgRef = (0, _react).useRef(null);
     let rest = all;
     let layout = sizes ? 'responsive' : 'intrinsic';
@@ -437,7 +436,8 @@ function Image(_param) {
             wrapperStyle.maxWidth = '100%';
             hasSizer = true;
             sizerStyle.maxWidth = '100%';
-            sizerSvgUrl = `data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27${widthInt}%27%20height=%27${heightInt}%27/%3e`;
+            // url encoded svg is a little bit shorten than base64 encoding
+            sizerSvgUrl = `data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 version=%271.1%27 width=%27${widthInt}%27 height=%27${heightInt}%27/%3e`;
         } else if (layout === 'fixed') {
             // <Image src="i.png" width="100" height="100" layout="fixed" />
             wrapperStyle.display = 'inline-block';
