@@ -45,6 +45,12 @@
     transform: translateX(89px);
 }
 
+.upper-cargo-effect {
+    z-index: 3;
+    animation: 120s rotate-upper-cargo forwards;
+}
+
+
 .spaceship-boosters {
     position: absolute;
     transform: translateX(-56px);
@@ -163,10 +169,33 @@
 }
 
 
+@keyframes rotate-upper-cargo {
+    1% { transform: translateX(0px) rotate(0deg); }
+    100% {transform: translateX(1000px)rotate(160deg) }
+}
+@keyframes rotate-under-cargo {
+    1% { transform: translateX(89px) rotate(0deg); }
+    100% {transform: translateX(1089px) rotate(160deg) }
+}
+
+@keyframes rotate-under-cargo-min320-portrait {
+    1% { transform: translateX(34px) rotate(0deg); }
+    100% {transform: translateX(1034px) rotate(160deg) }
+}
+
+@keyframes rotate-under-cargo-min480-portrait {
+    1% { transform: translateX(78px) rotate(0deg); }
+    100% {transform: translateX(1078px) rotate(160deg) }
+}
+@keyframes rotate-under-cargo-min480-landscape {
+    1% { transform: translateX(78px) rotate(0deg); }
+    100% {transform: translateX(1078px) rotate(160deg) }
+}
+
 @media (min-width: 320px) and (orientation: portrait) {
     .spaceship {
-        transform: translateX(-43px);
-        width: 55px;
+        transform: translateX(-42.5px);
+        width: 55.5px;
     }
     
     .cargo {
@@ -176,6 +205,12 @@
 
     .under-cargo {
         transform: translateX(34px);
+    }
+
+    .under-cargo-effect {
+        transform-origin: 88.23px ;
+        z-index: 1;
+        animation: 120s rotate-under-cargo-min320-portrait forwards;
     }
 
     .cargo-boosters {
@@ -302,6 +337,12 @@
         transform: translateX(78px);
     }
 
+    .under-cargo-effect {
+        transform-origin: 210.055px ;
+        z-index: 1;
+        animation: 120s rotate-under-cargo-min480-portrait forwards;
+    }
+
     .cargo-boosters {
         height: 60%;
         transform: translateX(10px);
@@ -365,6 +406,12 @@
         transform: translateX(78px);
     }
 
+    .under-cargo-effect {
+        transform-origin: 200.055px ;
+        z-index: 1;
+        animation: 120s rotate-under-cargo-min480-landscape forwards;
+    }
+
     .cargo-boosters {
         height: 60%;
         transform: translateX(10px);
@@ -425,6 +472,12 @@
 
     .under-cargo {
         transform: translateX(89px);
+    }
+
+    .under-cargo-effect {
+        transform-origin: 229.5px ;
+        z-index: 1;
+        animation: 120s rotate-under-cargo forwards;
     }
 
     .cargo-boosters {

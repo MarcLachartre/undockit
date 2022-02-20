@@ -42,8 +42,8 @@ class HomePage extends React.Component {
         // The other variables cannot really as their timings (delay and duration) are dependant from the other variables.
         // Below, for each stage of the animation, you can modify duration and delay.
 
-        const shipTranslateInDelay = 1500; // ** -> delay before ship starts translating in the screen
-        const shipTranslateInDuration = 7000; // ** -> duration of the ship translating in at the center of the screen
+        const shipTranslateInDelay = 0; // ** -> delay before ship starts translating in the screen
+        const shipTranslateInDuration = 0; // ** -> duration of the ship translating in at the center of the screen
        
         const undockMessageDelay = 1000; // ** -> delay before undock message appears
         const undockMessageTime = shipTranslateInDelay + shipTranslateInDuration + undockMessageDelay; // -> undock message appears and is clickable to start the undocking sequence
@@ -65,7 +65,7 @@ class HomePage extends React.Component {
         
         const shipRestartDelay = 1000; // ** -> delay before ship restarts after the all systems online message disappears
         const shipRestartTime = displaySystemsOnlineMsgTime + displaySystemsOnlineMsgDuration + shipRestartDelay; // -> time when ship restarts its boosters after all systems online message disappears
-        const shipRestartDuration = 5000; // ** -> duration of the ship restarting
+        const shipRestartDuration = 3000; // ** -> duration of the ship restarting
 
         const restartStarScrollTime = shipRestartTime; // -> star scrolling animation needs to be at the same time as when the ship restarts
 
@@ -127,13 +127,14 @@ class HomePage extends React.Component {
 
     render() { // Important: all timings need to be picked as a MULTIPLE OF 150 except for the Background stars js. Flamme stripes have an interval of 150.
         const timings = this.timings();
+        
         return(
             <div className = "homepage">
                 <Background 
                     animationTimer = {this.state.animationTimer}
                     screenClearedTime= {this.screenCleared(10, 450)}
                     restartStarScrollTime = {timings.restartStarScrollTime}
-                />{
+                />
 
                 <Spaceship 
                     animationTimer = {this.state.animationTimer}
@@ -152,7 +153,6 @@ class HomePage extends React.Component {
                     cargoBoostersSeq = {timings.cargoBoostersSeq} 
                     restartSpaceshipBoosters = {timings.restartSpaceshipBoosters}
                 />
-                }
                 
                 <Overlay 
                     timer = {this.timer}

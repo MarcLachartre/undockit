@@ -91,6 +91,8 @@ export default class Spaceship extends React.PureComponent {
         const shipBacking = () => {
             spaceship.classList.toggle("ship-split-transformation");
             spaceship.style.transition = `transform ${this.props.shipBackingDuration}ms ease-in-out`;
+            document.querySelector(".upper-cargo").classList.toggle("upper-cargo-effect");             
+            document.querySelector(".under-cargo").classList.toggle("under-cargo-effect");             
         }
 
         const shipUp = () => {   
@@ -98,8 +100,6 @@ export default class Spaceship extends React.PureComponent {
             spaceship.classList.toggle("ship-up-transformation");             
             spaceship.style.transition = `transform ${this.props.shipUpDuration}ms ease-in-out`;
             spaceship.style.zIndex = "5";
-            cargo.style.transition = `transform ${this.props.shipUpDuration}ms ease-in-out`;
-            cargo.style.transform = "scale(0.8)";
         }
         
         const shipRestart = () => {
@@ -107,7 +107,8 @@ export default class Spaceship extends React.PureComponent {
             spaceship.classList.toggle("ship-restart-transformation");  
             spaceship.style.transition = `transform ${this.props.shipRestartDuration}ms cubic-bezier(1.000, 0.005, 0.745, 0.995)`;
             cargo.style.transition = `transform ${this.props.shipRestartDuration}ms cubic-bezier(1.000, 0.005, 0.745, 0.995)`;
-            cargo.style.transform = "scale(0.8) translateX(-110vw)";
+            cargo.style.transform = "translateX(calc(-110vw - 1000px))";
+            console.log(cargo.style.transform)
         }
 
         if (this.props.animationTimer*100 === this.props.shipBackingTime) {
