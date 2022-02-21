@@ -110,7 +110,7 @@ export default class Spaceship extends React.PureComponent {
             spaceship.classList.toggle("ship-up-transformation");  
             spaceship.classList.toggle("ship-restart-transformation");  
             spaceship.style.transition = `transform ${this.props.shipRestartDuration}ms cubic-bezier(1.000, 0.005, 0.745, 0.995)`;
-            cargo.style.transition = `transform ${this.props.shipRestartDuration}ms cubic-bezier(1.000, 0.005, 0.745, 0.995)`;
+            cargo.style.transition = `transform ${this.props.shipRestartDuration*0.9}ms cubic-bezier(1.000, 0.005, 0.745, 0.995)`;
             cargo.style.transform = "translateX(-200vw)";
         }
 
