@@ -47,7 +47,7 @@
 
 .upper-cargo-effect {
     z-index: 3;
-    animation: linear 150s rotate-upper-cargo forwards;
+    animation: linear 180s rotate-upper-cargo forwards;
 }
 
 
@@ -172,12 +172,12 @@
 @keyframes rotate-upper-cargo {
     0% { transform: translateX(0px) rotate(0deg); }
     1% { transform: translateX(10px) rotate(0deg); }
-    100% {transform: translateX(1000px)rotate(160deg) }
+    100% {transform: translateX(1000px)rotate(180deg) }
 }
 @keyframes rotate-under-cargo {
     0% { transform: translateX(89px) rotate(0deg); }
     1% { transform: translateX(calc(89px + 10.89px)) rotate(0deg); }
-    100% {transform: translateX(1089px) rotate(160deg) }
+    100% {transform: translateX(1089px) rotate(180deg) }
 }
 
 @keyframes rotate-under-cargo-min320-portrait {
@@ -191,11 +191,10 @@
     1% { transform: translateX(calc(78px + 10.78px)) rotate(0deg); }
     100% {transform: translateX(1078px) rotate(160deg) }
 }
-
 @keyframes rotate-under-cargo-min480-landscape {
     0% { transform: translateX(78px) rotate(0deg); }
     1% { transform: translateX(calc(78px + 10.78px)) rotate(0deg); }
-    100% {transform: translateX(1078px) rotate(160deg) }
+    100% {transform: translateX(1078px) rotate(180deg) }
 }
 
 @media (min-width: 320px) and (orientation: portrait) {
@@ -216,7 +215,10 @@
     .under-cargo-effect {
         transform-origin: 88.23px ;
         z-index: 1;
-        animation: linear 150s rotate-under-cargo-min320-portrait forwards;
+        animation: linear 180s rotate-under-cargo-min320-portrait forwards;
+    }
+    .upper-cargo-effect {
+        animation: linear 180s rotate-upper-cargo forwards;
     }
 
     .cargo-boosters {
@@ -346,7 +348,10 @@
     .under-cargo-effect {
         transform-origin: 210.055px ;
         z-index: 1;
-        animation: linear 150s rotate-under-cargo-min480-portrait forwards;
+        animation: linear 180s rotate-under-cargo-min480-portrait forwards;
+    }
+    .upper-cargo-effect {
+        animation: linear 180s rotate-upper-cargo forwards;
     }
 
     .cargo-boosters {
@@ -415,7 +420,7 @@
     .under-cargo-effect {
         transform-origin: 200.055px ;
         z-index: 1;
-        animation: linear 150s rotate-under-cargo-min480-landscape forwards;
+        animation: linear 180s rotate-under-cargo-min480-landscape forwards;
     }
 
     .cargo-boosters {
@@ -484,6 +489,9 @@
         transform-origin: 229.5px ;
         z-index: 1;
         animation: linear 150s rotate-under-cargo forwards;
+    }
+    .upper-cargo-effect {
+        animation: linear 150s rotate-upper-cargo forwards;
     }
 
     .cargo-boosters {

@@ -52,20 +52,22 @@ export default class Spaceship extends React.PureComponent {
 
     defaultBoostersSequence(boosters) { // boosters needs to be a array
         boosters.forEach(booster => {
-            const sprite1 = booster.querySelectorAll("div.flame-sprite-1");
-            const sprite2 = booster.querySelectorAll("div.flame-sprite-2");
-            const sprite3 = booster.querySelectorAll("div.flame-sprite-3");
-            if (sprite1[0] !== undefined) {
-                if (sprite1[0].style.opacity === "") {
-                    sprite1.forEach(sprite => {sprite.style.opacity = "1" });
-                }
+            if (booster !== null) {
+                const sprite1 = booster.querySelectorAll("div.flame-sprite-1");
+                const sprite2 = booster.querySelectorAll("div.flame-sprite-2");
+                const sprite3 = booster.querySelectorAll("div.flame-sprite-3");
+                if (sprite1[0] !== undefined) {
+                    if (sprite1[0].style.opacity === "") {
+                        sprite1.forEach(sprite => {sprite.style.opacity = "1" });
+                    }
 
-                if (sprite1[0].style.opacity === "1") {
-                    this.nextSprite(sprite1, sprite2);
-                } else if (sprite2[0].style.opacity === "1") {
-                    this.nextSprite(sprite2, sprite3);
-                } else if (sprite3[0].style.opacity === "1") {
-                    this.nextSprite(sprite3, sprite1);
+                    if (sprite1[0].style.opacity === "1") {
+                        this.nextSprite(sprite1, sprite2);
+                    } else if (sprite2[0].style.opacity === "1") {
+                        this.nextSprite(sprite2, sprite3);
+                    } else if (sprite3[0].style.opacity === "1") {
+                        this.nextSprite(sprite3, sprite1);
+                    }
                 }
             }
         })
@@ -73,7 +75,9 @@ export default class Spaceship extends React.PureComponent {
 
     startAnimationBoostersSequence(boosters) {
         this.stopBoosters(boosters[0], this.props.spaceshipBoostersSeq.start, this.props.spaceshipBoostersSeq.end); // spaceship boosters
-        this.stopBoosters(boosters[1], this.props.cargoBoostersSeq.start, this.props.cargoBoostersSeq.end); // cargo boosters
+        if (boosters[1] !== null) {
+            this.stopBoosters(boosters[1], this.props.cargoBoostersSeq.start, this.props.cargoBoostersSeq.end); // cargo boosters
+        }
         this.restartSpaceshipBoosters(boosters[0], this.props.restartSpaceshipBoosters.start, this.props.restartSpaceshipBoosters.end); // restart spaceship boosters
     }
 
@@ -107,8 +111,11 @@ export default class Spaceship extends React.PureComponent {
             spaceship.classList.toggle("ship-restart-transformation");  
             spaceship.style.transition = `transform ${this.props.shipRestartDuration}ms cubic-bezier(1.000, 0.005, 0.745, 0.995)`;
             cargo.style.transition = `transform ${this.props.shipRestartDuration}ms cubic-bezier(1.000, 0.005, 0.745, 0.995)`;
-            cargo.style.transform = "translateX(calc(-110vw - 1000px))";
-            console.log(cargo.style.transform)
+            cargo.style.transform = "translateX(-200vw)";
+        }
+
+        const removeCargo = () => {
+            cargo.remove();
         }
 
         if (this.props.animationTimer*100 === this.props.shipBackingTime) {
@@ -120,6 +127,9 @@ export default class Spaceship extends React.PureComponent {
         } else if (this.props.animationTimer*100 === this.props.shipRestartTime) {
             console.log("ship restart")
             shipRestart();
+        } else if (this.props.animationTimer*100 === Number(this.props.shipRestartTime) + Number(this.props.shipRestartDuration)) {
+            console.log("remove cargo from animation")
+            removeCargo();
         }
     }
 

@@ -42,8 +42,8 @@ class HomePage extends React.Component {
         // The other variables cannot really as their timings (delay and duration) are dependant from the other variables.
         // Below, for each stage of the animation, you can modify duration and delay.
 
-        const shipTranslateInDelay = 0; // ** -> delay before ship starts translating in the screen
-        const shipTranslateInDuration = 0; // ** -> duration of the ship translating in at the center of the screen
+        const shipTranslateInDelay = 1000; // ** -> delay before ship starts translating in the screen
+        const shipTranslateInDuration = 7000; // ** -> duration of the ship translating in at the center of the screen
        
         const undockMessageDelay = 1000; // ** -> delay before undock message appears
         const undockMessageTime = shipTranslateInDelay + shipTranslateInDuration + undockMessageDelay; // -> undock message appears and is clickable to start the undocking sequence
