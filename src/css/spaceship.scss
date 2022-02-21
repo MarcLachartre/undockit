@@ -185,16 +185,34 @@
     1% { transform: translateX(calc(34px + 10.34px)) rotate(0deg); }
     100% {transform: translateX(1034px) rotate(160deg) }
 }
+@keyframes rotate-upper-cargo-min320-portrait {
+    0% { transform: translateX(0px) rotate(0deg); }
+    1% { transform: translateX(10px) rotate(0deg); }
+    100% {transform: translateX(1000px)rotate(160deg) }
+}
 
 @keyframes rotate-under-cargo-min480-portrait {
     0% { transform: translateX(78px) rotate(0deg); }
     1% { transform: translateX(calc(78px + 10.78px)) rotate(0deg); }
     100% {transform: translateX(1078px) rotate(160deg) }
 }
+
+@keyframes rotate-upper-cargo-min480-portrait {
+    0% { transform: translateX(0px) rotate(0deg); }
+    1% { transform: translateX(10px) rotate(0deg); }
+    100% {transform: translateX(1000px)rotate(160deg) }
+}
+
 @keyframes rotate-under-cargo-min480-landscape {
     0% { transform: translateX(78px) rotate(0deg); }
     1% { transform: translateX(calc(78px + 10.78px)) rotate(0deg); }
     100% {transform: translateX(1078px) rotate(180deg) }
+}
+
+@keyframes rotate-upper-cargo-min480-landscape {
+    0% { transform: translateX(0px) rotate(0deg); }
+    1% { transform: translateX(10px) rotate(0deg); }
+    100% {transform: translateX(1000px) rotate(180deg) }
 }
 
 @media (min-width: 320px) and (orientation: portrait) {
@@ -218,7 +236,7 @@
         animation: linear 180s rotate-under-cargo-min320-portrait forwards;
     }
     .upper-cargo-effect {
-        animation: linear 180s rotate-upper-cargo forwards;
+        animation: linear 180s rotate-upper-cargo-min320-portrait forwards;
     }
 
     .cargo-boosters {
@@ -351,7 +369,7 @@
         animation: linear 180s rotate-under-cargo-min480-portrait forwards;
     }
     .upper-cargo-effect {
-        animation: linear 180s rotate-upper-cargo forwards;
+        animation: linear 180s rotate-upper-cargo-min480-portrait forwards;
     }
 
     .cargo-boosters {
